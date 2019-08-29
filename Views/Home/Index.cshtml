@@ -1,0 +1,15 @@
+﻿@model Memo.Models.Operation
+@{
+    ViewBag.Title = "Index";
+}
+<p>Mini calculator</p>
+@using (Html.BeginForm(FormMethod.Post))
+{
+    @Html.Label("1st nb") @Html.TextBox("nb1")
+    @Html.Label("2nd nb") @Html.TextBox("nb2")
+    <input type="submit" name="operand" value="+" /> @* + Additionner *@
+    <input type="submit" name="operand" value="-" /> @* - Soustraire *@
+    <input type="submit" name="operand" value="*" /> @* * Multiplier *@
+    <input type="submit" name="operand" value="/" /> @* / Diviser *@
+}
+<p>Résultat : @ViewBag.result</p>
