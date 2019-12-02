@@ -1,0 +1,36 @@
+﻿@model Memo.Models.Number
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="cadre">pic 1</div>
+<div class="cadre">pic 2</div>
+<div class="cadre">pic 3</div>
+<div class="cadre">pic 4</div>
+<div class="cadre">pic 5</div>
+<div class="cadre">pic 6</div>
+
+
+@using (Html.BeginForm("FileUpload", "Home", FormMethod.Post,
+                            new { enctype = "multipart/form-data" }))
+{
+    <label for="pictureToUpload">Upload Image:</label>
+    <input type="file" name="pictureToUpload" id="file" style="width: 100%;" />
+    <input type="submit" value="Upload" class="submit" />
+}
+
+
+@*<img src="/houses.jpg">
+
+    <img src="/road.jpg">
+
+    <img src="/oldtimer.jpg">
+
+    <img src="/landscape.jpg">
+
+    <img src="/empire.jpg">
+
+    <img src="/lac.jpg">*@
+
+

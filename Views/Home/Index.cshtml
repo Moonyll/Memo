@@ -1,15 +1,36 @@
 ﻿@model Memo.Models.Operation
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var msg = @ViewBag.Error;
+
 }
-<p>Mini calculator</p>
+
 @using (Html.BeginForm(FormMethod.Post))
 {
-    @Html.Label("1st nb") @Html.TextBox("nb1")
-    @Html.Label("2nd nb") @Html.TextBox("nb2")
-    <input type="submit" name="operand" value="+" /> @* + Additionner *@
-    <input type="submit" name="operand" value="-" /> @* - Soustraire *@
-    <input type="submit" name="operand" value="*" /> @* * Multiplier *@
-    <input type="submit" name="operand" value="/" /> @* / Diviser *@
+    <p>
+        Mini calculator : @Html.Label("1st nb = ") @Html.TextBox("x") @Html.Label("2nd nb = ") @Html.TextBox("y")
+        <input type="submit" name="op" value="+" /> @* + Additionner *@
+        <input type="submit" name="op" value="-" /> @* - Soustraire *@
+        <input type="submit" name="op" value="*" /> @* * Multiplier *@
+        <input type="submit" name="op" value="/" /> @* / Diviser *@
+    </p>
+    <p>
+        @Html.ValidationMessage("x", new { @class = "text-danger" }) @Html.ValidationMessage("y", new { @class = "text-danger" }) @* Erreur de saisie *@
+    </p>
 }
-<p>Résultat : @ViewBag.result</p>
+    <p>Résultat : @ViewBag.result</p>
+    <div style="background-image: url('../road.jpg'); background-repeat: no-repeat; width:321px; height:480px" id="pic" oncontextmenu="return false;">test</div>
+    <input type="button" id="more" value="+" hidden>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    $("#pic").hover(function(){
+        $("#more").show();
+    },
+    function(){
+        $("#more").hide();
+    });
+    });
+    </script>
