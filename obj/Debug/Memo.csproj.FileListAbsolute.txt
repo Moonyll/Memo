@@ -84,3 +84,15 @@ C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\obj\Debug\Memo.csproj.CoreCompileIn
 C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\obj\Debug\Memo.csproj.CopyComplete
 C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\obj\Debug\Memo.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\obj\Debug\Memo.pdb
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\ImageProcessor.dll
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\ImageProcessor.Web.dll
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\ImageProcessor.Web.Plugins.PostProcessor.dll
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\ImageProcessor.xml
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\ImageProcessor.Web.xml
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\ImageProcessor.Web.Plugins.PostProcessor.xml
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\Microsoft.IO.RecyclableMemoryStream.pdb
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\MetadataExtractor.dll
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\XmpCore.dll
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\MetadataExtractor.xml
+C:\Users\s.pouwels\Desktop\Memento\Memo\Memo\bin\XmpCore.xml

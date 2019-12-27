@@ -10,21 +10,12 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="btn btn-primary navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">...
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Memo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Test", "Test", "Home")</li>
-
+            <div class="navbar">
+                <ul class="nav d-flex">
+                    <li>@Html.ActionLink("Accueil-", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Test", "Test")</li>
                 </ul>
             </div>
         </div>

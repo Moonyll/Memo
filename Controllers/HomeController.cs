@@ -2,6 +2,9 @@
 using System.Web;
 using System.Web.Mvc;
 using Memo.Models;
+using System.Drawing.Imaging;
+using System.Drawing;
+using MetadataExtractor;
 
 namespace Memo.Controllers
 {
@@ -23,18 +26,18 @@ namespace Memo.Controllers
             ViewBag.result = calculate.result; // Affichage du résultat
             return View();
         }
-        [HttpGet]
-        public ActionResult Test()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Test(Number nb)
-        {
-            var nb1 = nb.a;
-            ViewBag.number = nb1;
-            return View(nb);
-        }
+        //[HttpGet]
+        //public ActionResult Test()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public ActionResult Test(Number nb)
+        //{
+        //    var nb1 = nb.a;
+        //    ViewBag.number = nb1;
+        //    return View(nb);
+        //}
 
         public ActionResult FileUpload(HttpPostedFileBase pictureToUpload)
         {
@@ -59,5 +62,49 @@ namespace Memo.Controllers
             return RedirectToAction("Test", "Home");
         }
 
+        [HttpGet]
+        public JsonResult ShowPicture()
+        {
+            Picture pict = new Picture();
+
+            pict.pictureId = 1;
+            pict.pictureTitle = "lake";
+            pict.pictureDescritption = "a lake";
+            pict.pictureLocationUrl = "/lac.jpg";
+            pict.pictureRatingValue = 5;
+            pict.pictureViewsNumber = 10;
+
+            Image pic = new Bitmap("/lac.jpg");
+
+            PropertyItem[] propItems = pic.PropertyItems;
+
+            var dir = ImageMetadataReader.ReadMetadata("/lac.jpg");
+
+            return Json(pict, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Test()
+        {
+            Picture pict = new Picture();
+
+            pict.pictureId = 1;
+            pict.pictureTitle = "lake";
+            pict.pictureDescritption = "a lake";
+            pict.pictureLocationUrl = "/lac.jpg";
+            pict.pictureRatingValue = 5;
+            pict.pictureViewsNumber = 10;
+
+            Image pic = new Bitmap("C:\\Users\\s.pouwels\\Desktop\\Memento\\Memo\\Memo\\lac.jpg");
+
+            PropertyItem[] propItems = pic.PropertyItems;
+
+            var dir = ImageMetadataReader.ReadMetadata("C:\\Users\\s.pouwels\\Desktop\\Memento\\Memo\\Memo\\lac.jpg");
+
+            return View(pict);
+        }
+        public ActionResult Index2(string id)
+        {
+            id = "10";
+            return Content(id);
+        }
     }
 }

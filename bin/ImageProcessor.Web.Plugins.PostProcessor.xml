@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ImageProcessor.Web.Plugins.PostProcessor</name>
+    </assembly>
+    <members>
+        <member name="T:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorApplicationEvents">
+            <summary>
+            Binds the PostProcessor to process any image requests within the web application.
+            </summary>
+            <remarks>
+            Many thanks to Azure Image Optimizer <see href="https://github.com/ligershark/AzureJobs" />.
+            </remarks>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorApplicationEvents.Start">
+            <summary>
+            The initial startup method.
+            </summary>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorApplicationEvents.SetPostProcessingTimeout(System.Int32)">
+            <summary>
+            Sets the timeout limit in milliseconds for the post processor.
+            </summary>
+            <param name="milliseconds">The timeout limit in milliseconds.</param>
+            <remarks>
+            The default timeout is 5000 milliseconds. Timeouts lower or equal to 0 are ignored (to prevent waiting indefinitely for the post processor processes to exit).
+            </remarks>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorApplicationEvents.PostProcess(System.Object,ImageProcessor.Web.Helpers.PostProcessingEventArgs)">
+            <summary>
+            Post-processes cached images.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">An <see cref="T:ImageProcessor.Web.Helpers.PostProcessingEventArgs">EventArgs</see> that contains the event data.</param>
+        </member>
+        <member name="T:ImageProcessor.Web.Plugins.PostProcessor.PostProcessingResultEventArgs">
+            <summary>
+            The post processing result event arguments.
+            </summary>
+            <seealso cref="T:System.EventArgs" />
+            <remarks>
+            Many thanks to Azure Image Optimizer <see href="https://github.com/ligershark/AzureJobs" />.
+            </remarks>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.PostProcessingResultEventArgs.#ctor(System.String,System.Int64)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ImageProcessor.Web.Plugins.PostProcessor.PostProcessingResultEventArgs" /> class.
+            </summary>
+            <param name="resultFileName">The original file name.</param>
+            <param name="length">The original file length in bytes.</param>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.PostProcessingResultEventArgs.OriginalFileSize">
+            <summary>
+            Gets or sets the original file size in bytes.
+            </summary>
+            <value>
+            The size of the original file.
+            </value>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.PostProcessingResultEventArgs.ResultFileSize">
+            <summary>
+            Gets or sets the result file size in bytes.
+            </summary>
+            <value>
+            The size of the result file.
+            </value>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.PostProcessingResultEventArgs.ResultFileName">
+            <summary>
+            Gets or sets the result file name.
+            </summary>
+            <value>
+            The name of the result file.
+            </value>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.PostProcessingResultEventArgs.Saving">
+            <summary>
+            Gets the difference in file size in bytes.
+            </summary>
+            <value>
+            The difference in file size in bytes.
+            </value>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.PostProcessingResultEventArgs.Percent">
+            <summary>
+            Gets the difference in file size as a percentage.
+            </summary>
+            <value>
+            The difference in file size as a percentage.
+            </value>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.PostProcessingResultEventArgs.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>
+            A string that represents the current object.
+            </returns>
+        </member>
+        <member name="T:ImageProcessor.Web.Plugins.PostProcessor.PostProcessor">
+            <summary>
+            The image post processor.
+            </summary>
+            <remarks>
+            Many thanks to Azure Image Optimizer <see href="https://github.com/ligershark/AzureJobs" />.
+            </remarks>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.PostProcessor.PostProcessImageAsync(System.Web.HttpContext,System.IO.MemoryStream,System.String)">
+            <summary>
+            Post processes the image.
+            </summary>
+            <param name="context">The current context.</param>
+            <param name="stream">The source image stream.</param>
+            <param name="extension">The image extension.</param>
+            <returns>
+            The <see cref="T:System.IO.MemoryStream" />.
+            </returns>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.PostProcessor.GetProcessStartInfos(System.String,System.Int64,System.String,System.String)">
+            <summary>
+            Gets the process start infos.
+            </summary>
+            <param name="extension">The extension.</param>
+            <param name="length">The length.</param>
+            <param name="sourceFile">The source file.</param>
+            <param name="destinationFile">The destination file.</param>
+            <returns>
+            The process start infos.
+            </returns>
+        </member>
+        <member name="T:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper">
+            <summary>
+            The post processor bootstrapper.
+            </summary>
+            <remarks>
+            Many thanks to Azure Image Optimizer <see href="https://github.com/ligershark/AzureJobs" />.
+            </remarks>
+        </member>
+        <member name="F:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper.AssemblyVersion">
+            <summary>
+            The assembly version.
+            </summary>
+        </member>
+        <member name="F:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper.Lazy">
+            <summary>
+            A new instance of the <see cref="T:ImageProcessor.Web.Config.ImageProcessorConfig"/> class.
+            with lazy initialization.
+            </summary>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper"/> class from being created.
+            </summary>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper.Instance">
+            <summary>
+            Gets the current instance of the <see cref="T:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper"/> class.
+            </summary>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper.WorkingPath">
+            <summary>
+            Gets the working directory path.
+            </summary>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper.IsInstalled">
+            <summary>
+            Gets or a value indicating whether the post processor has been installed.
+            </summary>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper.Timout">
+            <summary>
+            Gets the allowed time in milliseconds for postprocessing an image file.
+            </summary>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.PostProcessorBootstrapper.RegisterExecutables">
+            <summary>
+            Registers the embedded executables.
+            </summary>
+        </member>
+        <member name="T:ImageProcessor.Web.Plugins.PostProcessor.ProcessEx">
+            <summary>
+            Provides methods to run a process asynchronously.
+            </summary>
+            <remarks>
+            Copyright (c) 2013 James Manning
+            
+            https://github.com/jamesmanning/RunProcessAsTask
+            </remarks>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.ProcessEx.RunAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously runs the process.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <param name="arguments">The arguments.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task that represents the asynchronous process.
+            </returns>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.ProcessEx.RunAsync(System.Diagnostics.ProcessStartInfo,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously runs the process.
+            </summary>
+            <param name="processStartInfo">The process start information.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task that represents the asynchronous process.
+            </returns>
+        </member>
+        <member name="T:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults">
+            <summary>
+            Specifies the process results.
+            </summary>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults.Process">
+            <summary>
+            Gets the process.
+            </summary>
+            <value>
+            The process.
+            </value>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults.ExitCode">
+            <summary>
+            Gets the exit code.
+            </summary>
+            <value>
+            The exit code.
+            </value>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults.RunTime">
+            <summary>
+            Gets the run time.
+            </summary>
+            <value>
+            The run time.
+            </value>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults.StandardOutput">
+            <summary>
+            Gets the standard output.
+            </summary>
+            <value>
+            The standard output.
+            </value>
+        </member>
+        <member name="P:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults.StandardError">
+            <summary>
+            Gets the standard error output.
+            </summary>
+            <value>
+            The standard error output.
+            </value>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults.#ctor(System.Diagnostics.Process,System.DateTime,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults"/> class.
+            </summary>
+            <param name="process">The process.</param>
+            <param name="processStartTime">The process start time.</param>
+            <param name="standardOutput">The standard output.</param>
+            <param name="standardError">The standard error.</param>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:ImageProcessor.Web.Plugins.PostProcessor.ProcessResults.Dispose(System.Boolean)">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+    </members>
+</doc>

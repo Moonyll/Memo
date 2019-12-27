@@ -35,9 +35,9 @@ namespace Memo.Models
         public int pictureId { get; set; }
         public string pictureTitle { get; set; }
         public string pictureDescritption { get; set; }
-        public string LocationUrl { get; set; }
-        public int pictureViewNumber { get; set; }
-        public string pictureRatingValue { get; set; }
+        public string pictureLocationUrl { get; set; }
+        public int pictureViewsNumber { get; set; }
+        public int pictureRatingValue { get; set; }
 
 
     }
