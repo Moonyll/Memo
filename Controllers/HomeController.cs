@@ -69,7 +69,7 @@ namespace Memo.Controllers
 
             pict.pictureId = 1;
             pict.pictureTitle = "lake";
-            pict.pictureDescritption = "a lake";
+            pict.pictureDescription = "a lake";
             pict.pictureLocationUrl = "/lac.jpg";
             pict.pictureRatingValue = 5;
             pict.pictureViewsNumber = 10;
@@ -82,25 +82,25 @@ namespace Memo.Controllers
 
             return Json(pict, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Test()
-        {
-            Picture pict = new Picture();
+        //public ActionResult Test()
+        //{
+        //    Picture pict = new Picture();
 
-            pict.pictureId = 1;
-            pict.pictureTitle = "lake";
-            pict.pictureDescritption = "a lake";
-            pict.pictureLocationUrl = "/lac.jpg";
-            pict.pictureRatingValue = 5;
-            pict.pictureViewsNumber = 10;
+        //    pict.pictureId = 1;
+        //    pict.pictureTitle = "lake";
+        //    pict.pictureDescritption = "a lake";
+        //    pict.pictureLocationUrl = "/lac.jpg";
+        //    pict.pictureRatingValue = 5;
+        //    pict.pictureViewsNumber = 10;
 
-            Image pic = new Bitmap("C:\\Users\\s.pouwels\\Desktop\\Memento\\Memo\\Memo\\lac.jpg");
+        //    Image pic = new Bitmap("C:\\Users\\s.pouwels\\Desktop\\Memento\\Memo\\Memo\\lac.jpg");
 
-            PropertyItem[] propItems = pic.PropertyItems;
+        //    PropertyItem[] propItems = pic.PropertyItems;
 
-            var dir = ImageMetadataReader.ReadMetadata("C:\\Users\\s.pouwels\\Desktop\\Memento\\Memo\\Memo\\lac.jpg");
+        //    var dir = ImageMetadataReader.ReadMetadata("C:\\Users\\s.pouwels\\Desktop\\Memento\\Memo\\Memo\\lac.jpg");
 
-            return View(pict);
-        }
+        //    return View(pict);
+        //}
         public ActionResult Index2(string id)
         {
             id = "10";

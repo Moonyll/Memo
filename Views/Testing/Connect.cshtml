@@ -1,0 +1,17 @@
+﻿@model Memo.Models.Identify
+
+@{
+    ViewBag.Title = "Connect";
+}
+
+<h2>Connect</h2>
+@using (Html.BeginForm())
+{
+    <label>please login</label>
+    <p>@Html.LabelFor(log=>log.loginValue)</p>
+    <p>@Html.EditorFor(log => log.loginValue)</p>
+    <label>pass</label>
+    <p>@Html.LabelFor(log => log.passValue)</p>
+    <p>@Html.EditorFor(log => log.passValue)</p>
+    <input type="submit" value="userlogin" />
+}

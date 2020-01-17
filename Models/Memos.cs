@@ -34,11 +34,17 @@ namespace Memo.Models
     {
         public int pictureId { get; set; }
         public string pictureTitle { get; set; }
-        public string pictureDescritption { get; set; }
+        public string pictureDescription { get; set; }
         public string pictureLocationUrl { get; set; }
         public int pictureViewsNumber { get; set; }
         public int pictureRatingValue { get; set; }
 
 
+    }
+
+    public class Identify
+    {
+        public string loginValue { get; set; }
+        public string passValue { get; set; }
     }
 }

@@ -1,17 +1,17 @@
 ﻿@model Memo.Models.Picture
 @{
-    ViewBag.Title = "Test";
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<label>pictureId</label>*@
+<label>pictureId</label>
 <p>@Html.Display("pictureId")</p>
-@*<label>pictureTitle</label>*@
+<label>pictureTitle</label>
 <p>@Html.Display("pictureTitle")</p>
-@*<label>pictureDescritption</label>*@
+<label>pictureDescritption</label>
 <p>@Html.Display("pictureDescription")</p>
-@*<label>picture</label>*@
-@*<img src=@Model.pictureLocationUrl />*@
+@*<label>picture</label>
+<img src=@Model.pictureLocationUrl />*@
 
 @*@using (Html.BeginForm("FileUpload", "Home", FormMethod.Post,
                             new { enctype = "multipart/form-data" }))
@@ -52,7 +52,7 @@
 @section Scripts
 {
 
-    @*<script type="text/javascript">
+    <script type="text/javascript">
 
         // Display picture data in p when button "disp" is clicked :
         $("#disp").click(function () {
@@ -78,4 +78,4 @@
             return false;
         }
     </script>
-}*@  
+}  

@@ -8,6 +8,11 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    @{
+        var pictureName = ViewBag.pictureName;
+
+     }
+
 </head>
 <body>
     <div class="navbar navbar-fixed-top">
@@ -15,7 +20,8 @@
             <div class="navbar">
                 <ul class="nav d-flex">
                     <li>@Html.ActionLink("Accueil-", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Test", "Test")</li>
+                    <li>@Html.ActionLink("To Test", "Details", "Testing")</li>
+                    <li>@Html.ActionLink("To connect", "Connect", "Testing")</li>
                 </ul>
             </div>
         </div>
