@@ -15,9 +15,8 @@ namespace Memo
 
             routes.MapRoute(
                 name: "Testing",
-                url: "Testing/Details/{Ids}",
-                defaults: new { controller = "Testing", action = "Details", Ids=UrlParameter.Optional},
-                constraints: new { Ids = @"\d+" }
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Testing", action = "Connect", Ids = UrlParameter.Optional }
             );
 
             routes.MapRoute(

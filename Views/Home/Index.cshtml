@@ -1,4 +1,4 @@
-﻿@model Memo.Models.Operation
+﻿@model Memo.Models.Identify
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,18 +19,29 @@
         @Html.ValidationMessage("x", new { @class = "text-danger" }) @Html.ValidationMessage("y", new { @class = "text-danger" }) @* Erreur de saisie *@
     </p>
 }
-    <p>Résultat : @ViewBag.result</p>
-    @*<div style="background-image: url('../road.jpg'); background-repeat: no-repeat; width:321px; height:480px" id="pic" oncontextmenu="return false;">test</div>*@
-    <input type="button" id="more" value="+" hidden>
+<p>Résultat : @ViewBag.result</p>
+@*<div style="background-image: url('../road.jpg'); background-repeat: no-repeat; width:321px; height:480px" id="pic" oncontextmenu="return false;">test</div>*@
+<input type="button" id="more" value="+" hidden>
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script>
-    $(document).ready(function(){
-    $("#pic").hover(function(){
-        $("#more").show();
-    },
-    function(){
-        $("#more").hide();
+
+<h2>Connect</h2>
+@using (Html.BeginForm(FormMethod.Post))
+{
+
+    @Html.Label("Login") @Html.TextBox("loginValue") @Html.Label("Pass") @Html.TextBox("passValue")
+    <input type="submit" name="userLogin" value="userLogin" />
+}
+
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#pic").hover(function () {
+            $("#more").show();
+        },
+            function () {
+                $("#more").hide();
+            });
     });
-    });
-    </script>
+</script>

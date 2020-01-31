@@ -1,15 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations; // Espace Nom pour accéder aux attributs.
+using System.Text.RegularExpressions;
 
 namespace Memo.Models
 {
     public class Operation
     {
-        [RegularExpression(Pattern, ErrorMessage = Error)]
+        [RegularExpression(Pattern2, ErrorMessage = Error)]
         public float x { get; set; } // 1er nombre
         [RegularExpression(Pattern, ErrorMessage = Error)]
         public float y { get; set; } // 2nd nombre
         private const string Pattern = @"^\d*,?\d+$";
+        private const string Pattern2 = @".*[^~^¨,;:@#!|{}()=+*]";
         public const string Error = "input should be a number";
         public string op { get; set;} // Opérateur
         public string result { get; set; } // Résultat
@@ -44,7 +46,20 @@ namespace Memo.Models
 
     public class Identify
     {
+        private const string adminLogin = "toto";
+        private const string adminPassword = "toto";
+
+        [RegularExpression(adminLogin, ErrorMessage = "Wrong login !")]
         public string loginValue { get; set; }
+
+        [RegularExpression(adminPassword, ErrorMessage = "Wrong password !")]
         public string passValue { get; set; }
+
+        private bool isConnectionOk { get; set; }
+
+        public bool testConnectionOk()
+        {
+            return isConnectionOk = ((loginValue == adminLogin) && (loginValue == adminLogin)) ? true : false;
+        }
     }
 }

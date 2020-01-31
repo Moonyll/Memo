@@ -10,7 +10,7 @@ namespace Memo.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet] // 1er appel de la méthode - on indique GET
+        [HttpGet] // 1er appel de la méthode - On indique GET.
         public ActionResult Index()
         {
             return View();
@@ -26,18 +26,6 @@ namespace Memo.Controllers
             ViewBag.result = calculate.result; // Affichage du résultat
             return View();
         }
-        //[HttpGet]
-        //public ActionResult Test()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public ActionResult Test(Number nb)
-        //{
-        //    var nb1 = nb.a;
-        //    ViewBag.number = nb1;
-        //    return View(nb);
-        //}
 
         public ActionResult FileUpload(HttpPostedFileBase pictureToUpload)
         {

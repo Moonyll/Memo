@@ -7,8 +7,9 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Text.RegularExpressions;
 
-namespace Memo.Views.Home
+namespace Memo.Controllers
 {
     public class TestingController : Controller
     {
@@ -35,30 +36,26 @@ namespace Memo.Views.Home
             return View(pict);
         }
 
+        //public ActionResult Connect()
+        //{
+        //    Identify userConnect = new Identify { loginValue = "toto", passValue = "toto" };
+
+        //    return View(userConnect);
+
+        //}
+        [HttpGet] // 1er appel de la méthode - On indique GET.
         public ActionResult Connect()
         {
-            Identify userConnect = new Identify { loginValue = "toto", passValue = "toto" };
-
-            return View(userConnect);
-
+            return View();
         }
-
-        [HttpPost]
-        public ActionResult Login(Identify userlogin)
+        [HttpPost] // On soumet le formulaire - On indique POST.
+        public ActionResult Connect(Identify userConnect)
         {
-            Identify userConnect = new Identify { loginValue = "toto", passValue = "toto" };
-            var enterLoginValue = Session["loginValue"].ToString();
-            var enterPassValue = Session["passValue"].ToString();
-
-            if (enterLoginValue == userConnect.loginValue
-                && enterPassValue == userConnect.passValue)
+            if(userConnect.testConnectionOk())
             {
-                RedirectToAction("Testing/Connexion");
+                return View("Connexion");
             }
-         
-            
                 return View("Connect");
-           
         }
         public ActionResult Connexion()
         {
