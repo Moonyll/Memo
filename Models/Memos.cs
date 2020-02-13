@@ -35,11 +35,27 @@ namespace Memo.Models
     public class Picture
     {
         public int pictureId { get; set; }
+        [Required]
+        [RegularExpression("titi", ErrorMessage ="Ko !")]
         public string pictureTitle { get; set; }
         public string pictureDescription { get; set; }
         public string pictureLocationUrl { get; set; }
         public int pictureViewsNumber { get; set; }
         public int pictureRatingValue { get; set; }
+
+
+    }
+
+    public class SecurePicture : Picture
+    {
+
+        private const string Jpg = "jpg";
+        private const string Jpeg = "jpeg";
+
+
+
+        public string [] pictureExtensions{ get; set; }
+        public int [] pictureSizes { get; set; }
 
 
     }

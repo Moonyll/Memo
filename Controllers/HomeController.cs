@@ -94,5 +94,39 @@ namespace Memo.Controllers
             id = "10";
             return Content(id);
         }
+
+        public ActionResult Form()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetData(string test)
+        {
+            return Json("Successfully get method executed.", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult PostData(string test)
+        {
+            return Json("Successfully post method executed.");
+        }
+
+        [HttpPost]
+        public ActionResult PostTitle(string pictureTitle)
+        {
+            try
+            {
+                if (pictureTitle != null)
+                {
+                    return Json(new { success = true, message = "It's Okay !" }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { success = true, message = "It's Okay !" }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new { error = "KO" }, JsonRequestBehavior.AllowGet);
+            }  
+
+        }
     }
 }

@@ -1,0 +1,165 @@
+﻿@model Memo.Models.Picture
+@{
+    ViewBag.Title = "form";
+}
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+<form>
+    <div id="test1">
+        <label for="pictureTitle">Titre</label>
+        <input type="text" id="toto" class="form-control col-2 " onfocus="clearCss()" onblur="isValid()">
+        <input type="submit" id="send" value="send" />
+    </div>
+    <div class="invalid-tooltip">
+        Please choose a unique and valid username.
+    </div>
+</form>
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    $(document).ready(function ()
+    {
+
+        $('#send').click(function ()
+        {
+
+            var pictureTitle = $('#toto').val();
+
+            $.ajax({
+                     url: '@Url.Action("PostTitle")',
+                     dataType: 'json',
+                     type: 'POST',
+                     cache : false,
+                     data: { pictureTitle: pictureTitle },
+                     success: function (data)
+                     {
+                         alert(pictureTitle + " " + data.message);
+
+                     },
+                     error: function (ex)
+                     {
+
+                         alert('error');
+                     }
+            });
+        });
+
+    });
+
+    function isValid() {
+
+        $('#toto').removeClass('is-valid');
+        $('#toto').removeClass('is-invalid');
+
+        var entry = $('#toto').val();
+
+        var tooltip = '<div>Please enter a correct title</div>';
+
+        (entry == 'toto') ? $('#toto').addClass('is-valid') : $('#toto').addClass('is-invalid');
+
+        $('#test1').append(tooltip);
+
+    }
+    //$('#toto').on('change', function () {
+    //    alert('oki');
+    //    $('#test').text('ok test');
+    //});
+    function clearCss() {
+
+        $('#toto').removeClass('is-valid');
+        $('#toto').removeClass('is-invalid');
+        $('#test1').remove(tooltip);
+
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h1>Http get and post</h1>
+
+    <div class="clear">  <br /> </div>
+    <table>
+        <thead>
+            <tr> <th>Method</th>  <th>Action</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Http Get</td>
+                <td><a href="javascript:;" onclick="GetData();">Click to Get</a></td>
+            </tr>
+            <tr>
+                <td>Http Post</td>
+                <td><a href="javascript:;" onclick="PostData();">Click to Post</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        function GetData() {
+            $.ajax({
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                url: "../Home/GetData" + "?test=1",
+                success: function (data) { alert('Successfully get method executed.') },
+                error: function (a, jqXHR, exception) { }
+            });
+        }
+        function PostData() {
+            $.ajax({
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                url: "../Home/PostData",
+                data: "{ 'test': '2'}",
+                success: function (data) { alert(data) },
+                error: function (a, jqXHR, exception) { }
+            });
+        }
+    </script>
+
+    <style type="text/css">
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        tr:nth-of-type(odd) {
+            background: #eee;
+        }
+
+        th {
+            background: #333;
+            color: white;
+            font-weight: bold;
+        }
+
+        td, th {
+            padding: 6px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+    </style>*@

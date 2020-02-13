@@ -221,6 +221,7 @@
     <Content Include="Views\Testing\Details.cshtml" />
     <Content Include="Views\Testing\Connect.cshtml" />
     <Content Include="Views\Testing\Connexion.cshtml" />
+    <Content Include="Views\Home\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
