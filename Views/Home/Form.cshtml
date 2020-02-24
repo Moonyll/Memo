@@ -1,14 +1,18 @@
 ﻿@model Memo.Models.Picture
 @{
     ViewBag.Title = "form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @using (Html.BeginForm(FormMethod.Post))
 {
 <form>
     <div id="test1">
-        <label for="pictureTitle">Titre</label>
-        <input type="text" id="toto" class="form-control col-2 " onfocus="clearCss()" onblur="isValid()">
+        @*<label for="pictureTitle">Titre</label>
+        <input type="text" id="toto" class="form-control col-2 " onfocus="clearCss()" onblur="isValid()">*@
+        @Html.Label("pictureTitle")
+        @Html.TextBox("pictureTitle",null,null, new { @id = "toto", @class = "form-control col-2 ", @onfocus = "clearCss()", @onblur = "isValid()" })
+        @Html.ValidationMessage("pictureTitle", new { @class = "text-danger" })
         <input type="submit" id="send" value="send" />
     </div>
     <div class="invalid-tooltip">
@@ -19,7 +23,7 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 
 <script>
-    $(document).ready(function ()
+    @*$(document).ready(function ()
     {
 
         $('#send').click(function ()
@@ -46,7 +50,7 @@
             });
         });
 
-    });
+    });*@
 
     function isValid() {
 
@@ -55,22 +59,17 @@
 
         var entry = $('#toto').val();
 
-        var tooltip = '<div>Please enter a correct title</div>';
+        var tooltip = '<div id="tool">Please enter a correct title</div>';
 
-        (entry == 'toto') ? $('#toto').addClass('is-valid') : $('#toto').addClass('is-invalid');
-
-        $('#test1').append(tooltip);
+        (entry == 'toto') ? $('#toto').addClass('is-valid') : $('#toto').addClass('is-invalid') && $('#test1').append(tooltip);
 
     }
-    //$('#toto').on('change', function () {
-    //    alert('oki');
-    //    $('#test').text('ok test');
-    //});
+
     function clearCss() {
 
         $('#toto').removeClass('is-valid');
         $('#toto').removeClass('is-invalid');
-        $('#test1').remove(tooltip);
+        $('#tool').remove();
 
     }
 </script>
