@@ -8,40 +8,72 @@
 
 @using (Html.BeginForm(FormMethod.Post))
 {
-    <p>
-        Mini calculator : @Html.Label("1st nb = ") @Html.TextBox("x") @Html.Label("2nd nb = ") @Html.TextBox("y")
-        <input type="submit" name="op" value="+" /> @* + Additionner *@
-        <input type="submit" name="op" value="-" /> @* - Soustraire *@
-        <input type="submit" name="op" value="*" /> @* * Multiplier *@
-        <input type="submit" name="op" value="/" /> @* / Diviser *@
-    </p>
+<p>
+    @*Mini calculator : @Html.Label("1st nb = ") @Html.TextBox("x") @Html.Label("2nd nb = ") @Html.TextBox("y")*@
+    @*<input type="submit" name="op" value="+" /> @* + Additionner *@
+    @*<input type="submit" name="op" value="-" /> @* - Soustraire *@
+    @*<input type="submit" name="op" value="*" /> @* * Multiplier *@
+    @*<input type="submit" name="op" value="/" /> @* / Diviser *@
+</p>
     <p>
         @Html.ValidationMessage("x", new { @class = "text-danger" }) @Html.ValidationMessage("y", new { @class = "text-danger" }) @* Erreur de saisie *@
     </p>
 }
-<p>Résultat : @ViewBag.result</p>
+@*<p>Résultat : @ViewBag.result</p>
 @*<div style="background-image: url('../road.jpg'); background-repeat: no-repeat; width:321px; height:480px" id="pic" oncontextmenu="return false;">test</div>*@
-<input type="button" id="more" value="+" hidden>
+@*<input type="button" id="more" value="+" hidden>*@
 
 
-<h2>Connect</h2>
+@*<h2>Connect</h2>*@
 @using (Html.BeginForm(FormMethod.Post))
 {
 
-    @Html.Label("Login") @Html.TextBox("loginValue") @Html.Label("Pass") @Html.TextBox("passValue")
-    <input type="submit" name="userLogin" value="userLogin" />
+    @*@Html.Label("Login") @Html.TextBox("loginValue") @Html.Label("Pass") @Html.TextBox("passValue")
+    <input type="submit" name="userLogin" value="userLogin" />*@
 }
 
 
+@*Display picture exifs :*@
+    <div class="border border-primary mx-auto text-left exifsData" id="exifsInfos">
+        <ul>
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#pic").hover(function () {
-            $("#more").show();
-        },
-            function () {
-                $("#more").hide();
-            });
-    });
-</script>
+            @*Display camera make :*@
+            <li><i class="fas fa-industry"></i><span id="picCameraMake"> : marque appareil </span></li>
+
+            @*Display camera model :*@
+            <li><i class="fas fa-camera"></i><span id="picCameraModel"> : appareil photo</span></li>
+
+            @*Display picture date time :*@
+            <li><i class="far fa-calendar-alt"></i><span id="pictureOriginalDateTime"> : Date & heure prise de vue.</span></li>
+
+            @*Display picture exposure time :*@
+            <li><i class="fab fa-chrome"></i><span id="pictureExposureTime"> : Vitesse d'oburation (s).</span></li>
+
+            @*Display picture speed ratings :*@
+            <li><i class="far fa-lightbulb"></i><span id="pictureIsoSpeedRatings"> : Sensibilité iso (ISO).</span></li>
+
+            @*Display picture focal length :*@
+            <li><i class="fas fa-ruler-horizontal"></i><span id="pictureFocalLength"> : Longueur focale (mm).</span></li>
+
+            @*Display picture flash :*@
+            <li><i class="fas fa-bolt"></i><span id="pictureFlash"> : Flash utilisé oui / non.</span></li>
+
+            @*Display picture height :*@
+            <li><i class="fas fa-ruler-combined"></i><span id="pictureHeight"> : Hauteur (pixels).</span></li>
+
+            @*Display picture width :*@
+            <li><i class="fas fa-ruler-combined"></i><span id="pictureWidth"> : Largeur (pixels).</span></li>
+        </ul>
+    </div>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#pic").hover(function () {
+                $("#more").show();
+            },
+                function () {
+                    $("#more").hide();
+                });
+        });
+    </script>

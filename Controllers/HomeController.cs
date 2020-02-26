@@ -146,53 +146,54 @@ namespace Memo.Controllers
             var pictureDirectories = ImageMetadataReader.ReadMetadata(pictureFile).ToList();
 
             // 1° Read directories metadata files :
-    
-                // Read "Exif IFD0" directory file :
-                var subIfd0Directory = pictureDirectories.OfType<ExifIfd0Directory>().FirstOrDefault();
-    
-                // Read "Exif SubIFD" directory file :
-                var subIfdDirectory = pictureDirectories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
-    
-                // Read "MetadataDirectory" directory file :
-                var subMetadataDirectory = pictureDirectories.OfType<FileMetadataDirectory>().FirstOrDefault();
 
-            
+            // Read "Exif IFD0" directory file :
+            var subIfd0Directory = pictureDirectories.OfType<ExifIfd0Directory>().FirstOrDefault();
+
+            // Read "Exif SubIFD" directory file :
+            var subIfdDirectory = pictureDirectories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+
+            // Read "MetadataDirectory" directory file :
+            var subMetadataDirectory = pictureDirectories.OfType<FileMetadataDirectory>().FirstOrDefault();
+
+
             // 2° Get Exifs data from read file :
-            
-                // Get the camera make :
-                pictureExifs.pictureCameraMake = subIfd0Directory?.GetDescription(ExifDirectoryBase.TagMake);
-    
-                // Get the camera model :
-                pictureExifs.pictureCameraModel = subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel);
-    
-                // Get original date time :
-                pictureExifs.pictureOriginalDateTime = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal);
-    
-                // Get aperture value :
-                pictureExifs.pictureApertureValue = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture);
-    
-                // Get exposure time :
-                pictureExifs.pictureExposureTime = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExposureTime);
-    
-                // Get iso speed ratings :
-                pictureExifs.pictureIsoSpeedRatings = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagIsoEquivalent);
 
-                // Get picture flash :
-                pictureExifs.pictureFlash = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFlash);
+            // Get the camera make :
+            pictureExifs.pictureCameraMake = subIfd0Directory?.GetDescription(ExifDirectoryBase.TagMake);
 
-                // Get focal length :
-                pictureExifs.pictureFocalLength = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFocalLength);
-    
-                // Get picture width :
-                pictureExifs.pictureWidth = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageWidth);
-    
-                // Get picture height :
-                pictureExifs.pictureHeight = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageHeight);
+            // Get the camera model :
+            pictureExifs.pictureCameraModel = subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel);
 
-                // Get picture file size :
-                pictureExifs.pictureFileSize = subMetadataDirectory?.GetDescription(FileMetadataDirectory.TagFileSize);
+            // Get original date time :
+            pictureExifs.pictureOriginalDateTime = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal);
+
+            // Get aperture value :
+            pictureExifs.pictureApertureValue = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture);
+
+            // Get exposure time :
+            pictureExifs.pictureExposureTime = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExposureTime);
+
+            // Get iso speed ratings :
+            pictureExifs.pictureIsoSpeedRatings = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagIsoEquivalent);
+
+            // Get picture flash :
+            pictureExifs.pictureFlash = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFlash);
+
+            // Get focal length :
+            pictureExifs.pictureFocalLength = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFocalLength);
+
+            // Get picture width :
+            pictureExifs.pictureWidth = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageWidth);
+
+            // Get picture height :
+            pictureExifs.pictureHeight = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageHeight);
+
+            // Get picture file size :
+            pictureExifs.pictureFileSize = subMetadataDirectory?.GetDescription(FileMetadataDirectory.TagFileSize);
 
 
             return pictureExifs;
         }
+    }
 }
