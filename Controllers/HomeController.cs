@@ -1,33 +1,34 @@
-﻿using System.IO;
-using System.Web;
-using System.Web.Mvc;
-using Memo.Models;
-using System.Drawing.Imaging;
-using System.Drawing;
-using MetadataExtractor;
+﻿using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using MetadataExtractor.Formats.FileSystem;
+using ModellsUp.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-namespace Memo.Controllers
+namespace ModellsUp.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet] // 1er appel de la méthode - On indique GET.
         public ActionResult Index()
         {
             return View();
         }
-        [HttpPost] // On soumet le formulaire - On indique POST.
 
-        public ActionResult Index(Operation calculate)
+        public ActionResult About()
         {
-            var x = calculate.x; // 1er nombre
-            var y = calculate.y; // 2nd nombre
-            var op = calculate.op; // Opérateur
-            calculate.Calculate(); // Calcul
-            ViewBag.result = calculate.result; // Affichage du résultat
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
             return View();
         }
 
@@ -40,6 +41,8 @@ namespace Memo.Controllers
                 // file is uploaded
                 pictureToUpload.SaveAs(path);
 
+                GetExifs(path);
+
                 // save the image path path to the database or you can send image 
                 // directly to database
                 // in-case if you want to store byte[] ie. for DB
@@ -51,89 +54,7 @@ namespace Memo.Controllers
 
             }
             // after successfully uploading redirect the user
-            return RedirectToAction("Test", "Home");
-        }
-
-        [HttpGet]
-        public JsonResult ShowPicture()
-        {
-            Picture pict = new Picture();
-
-            pict.pictureId = 1;
-            pict.pictureTitle = "lake";
-            pict.pictureDescription = "a lake";
-            pict.pictureLocationUrl = "/lac.jpg";
-            pict.pictureRatingValue = 5;
-            pict.pictureViewsNumber = 10;
-
-            Image pic = new Bitmap("/lac.jpg");
-
-            PropertyItem[] propItems = pic.PropertyItems;
-
-            var dir = ImageMetadataReader.ReadMetadata("/lac.jpg");
-
-            return Json(pict, JsonRequestBehavior.AllowGet);
-        }
-        //public ActionResult Test()
-        //{
-        //    Picture pict = new Picture();
-
-        //    pict.pictureId = 1;
-        //    pict.pictureTitle = "lake";
-        //    pict.pictureDescritption = "a lake";
-        //    pict.pictureLocationUrl = "/lac.jpg";
-        //    pict.pictureRatingValue = 5;
-        //    pict.pictureViewsNumber = 10;
-
-        //    Image pic = new Bitmap("C:\\Users\\s.pouwels\\Desktop\\Memento\\Memo\\Memo\\lac.jpg");
-
-        //    PropertyItem[] propItems = pic.PropertyItems;
-
-        //    var dir = ImageMetadataReader.ReadMetadata("C:\\Users\\s.pouwels\\Desktop\\Memento\\Memo\\Memo\\lac.jpg");
-
-        //    return View(pict);
-        //}
-        public ActionResult Index2(string id)
-        {
-            id = "10";
-            return Content(id);
-        }
-
-        public ActionResult Form()
-        {
             return View();
-        }
-
-        [HttpGet]
-        public ActionResult GetData(string test)
-        {
-            return Json("Successfully get method executed.", JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public ActionResult PostData(string test)
-        {
-            return Json("Successfully post method executed.");
-        }
-
-        [HttpPost]
-        public ActionResult PostTitle(Picture picture)
-        {
-
-            var pictureTitle = picture.pictureTitle;
-            //try
-            //{
-            //    if (pictureTitle != null)
-            //    {
-            //        return Json(new { success = true, message = "It's Okay !" }, JsonRequestBehavior.AllowGet);
-            //    }
-            //    return Json(new { success = true, message = "It's Okay !" }, JsonRequestBehavior.AllowGet);
-            //}
-            //catch
-            //{
-            //    return Json(new { error = "KO" }, JsonRequestBehavior.AllowGet);
-            //}
-            return View();
-
         }
 
         // Get Exifs Informations :
@@ -160,40 +81,49 @@ namespace Memo.Controllers
             // 2° Get Exifs data from read file :
 
             // Get the camera make :
-            pictureExifs.pictureCameraMake = subIfd0Directory?.GetDescription(ExifDirectoryBase.TagMake);
+            pictureExifs.pictureCameraMake = (string.IsNullOrEmpty(subIfd0Directory?.GetDescription(ExifDirectoryBase.TagMake))) ? "---" : "data";
 
             // Get the camera model :
-            pictureExifs.pictureCameraModel = subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel);
+            pictureExifs.pictureCameraModel = (string.IsNullOrEmpty(subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel))) ? "---" : "data";
 
             // Get original date time :
-            pictureExifs.pictureOriginalDateTime = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal);
+            pictureExifs.pictureOriginalDateTime = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal))) ? "---" : "data";
 
             // Get aperture value :
-            pictureExifs.pictureApertureValue = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture);
+            pictureExifs.pictureApertureValue = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture))) ? "---" : "data";
 
             // Get exposure time :
-            pictureExifs.pictureExposureTime = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExposureTime);
+            pictureExifs.pictureExposureTime = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExposureTime))) ? "---" : "data";
 
             // Get iso speed ratings :
-            pictureExifs.pictureIsoSpeedRatings = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagIsoEquivalent);
+            pictureExifs.pictureIsoSpeedRatings = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagIsoEquivalent))) ? "---" : "data";
 
             // Get picture flash :
-            pictureExifs.pictureFlash = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFlash);
+            pictureExifs.pictureFlash = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFlash))) ? "---" : "data";
 
             // Get focal length :
-            pictureExifs.pictureFocalLength = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFocalLength);
+            pictureExifs.pictureFocalLength = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFocalLength))) ? "---" : "data";
 
             // Get picture width :
-            pictureExifs.pictureWidth = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageWidth);
+            pictureExifs.pictureWidth = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageWidth))) ? "---" : "data";
 
             // Get picture height :
-            pictureExifs.pictureHeight = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageHeight);
+            pictureExifs.pictureHeight = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageHeight))) ? "---" : "data";
 
             // Get picture file size :
-            pictureExifs.pictureFileSize = subMetadataDirectory?.GetDescription(FileMetadataDirectory.TagFileSize);
+            pictureExifs.pictureFileSize = (string.IsNullOrEmpty(subMetadataDirectory?.GetDescription(FileMetadataDirectory.TagFileSize))) ? "---" : "data";
 
 
             return pictureExifs;
         }
+
+        // To do recurrent method :
+        public string GetExifData(MetadataExtractor.Directory dir, int tag)
+        {
+            var data = dir?.GetDescription(tag);
+
+            return data;
+        }
     }
+
 }
