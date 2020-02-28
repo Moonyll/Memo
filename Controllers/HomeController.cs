@@ -34,6 +34,8 @@ namespace ModellsUp.Controllers
 
         public ActionResult FileUpload(HttpPostedFileBase pictureToUpload)
         {
+            var pictureExifs = new pictureExifMetaData();
+
             if (pictureToUpload != null)
             {
                 string pic = Path.GetFileName(pictureToUpload.FileName);
@@ -41,7 +43,7 @@ namespace ModellsUp.Controllers
                 // file is uploaded
                 pictureToUpload.SaveAs(path);
 
-                GetExifs(path);
+                pictureExifs = GetExifs(path);
 
                 // save the image path path to the database or you can send image 
                 // directly to database
@@ -54,7 +56,7 @@ namespace ModellsUp.Controllers
 
             }
             // after successfully uploading redirect the user
-            return View();
+            return View("Index", pictureExifs);
         }
 
         // Get Exifs Informations :
@@ -81,37 +83,37 @@ namespace ModellsUp.Controllers
             // 2° Get Exifs data from read file :
 
             // Get the camera make :
-            pictureExifs.pictureCameraMake = (string.IsNullOrEmpty(subIfd0Directory?.GetDescription(ExifDirectoryBase.TagMake))) ? "---" : "data";
+            pictureExifs.pictureCameraMake = (string.IsNullOrEmpty(subIfd0Directory?.GetDescription(ExifDirectoryBase.TagMake))) ? "---" : subIfd0Directory?.GetDescription(ExifDirectoryBase.TagMake);
 
             // Get the camera model :
-            pictureExifs.pictureCameraModel = (string.IsNullOrEmpty(subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel))) ? "---" : "data";
+            pictureExifs.pictureCameraModel = (string.IsNullOrEmpty(subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel))) ? "---" : subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel);
 
             // Get original date time :
-            pictureExifs.pictureOriginalDateTime = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal))) ? "---" : "data";
+            pictureExifs.pictureOriginalDateTime = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal);
 
             // Get aperture value :
-            pictureExifs.pictureApertureValue = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture))) ? "---" : "data";
+            pictureExifs.pictureApertureValue = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture);
 
             // Get exposure time :
-            pictureExifs.pictureExposureTime = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExposureTime))) ? "---" : "data";
+            pictureExifs.pictureExposureTime = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExposureTime))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExposureTime);
 
             // Get iso speed ratings :
-            pictureExifs.pictureIsoSpeedRatings = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagIsoEquivalent))) ? "---" : "data";
+            pictureExifs.pictureIsoSpeedRatings = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagIsoEquivalent))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagIsoEquivalent);
 
             // Get picture flash :
-            pictureExifs.pictureFlash = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFlash))) ? "---" : "data";
+            pictureExifs.pictureFlash = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFlash))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFlash);
 
             // Get focal length :
-            pictureExifs.pictureFocalLength = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFocalLength))) ? "---" : "data";
+            pictureExifs.pictureFocalLength = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFocalLength))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagFocalLength);
 
             // Get picture width :
-            pictureExifs.pictureWidth = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageWidth))) ? "---" : "data";
+            pictureExifs.pictureWidth = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageWidth))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageWidth);
 
             // Get picture height :
-            pictureExifs.pictureHeight = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageHeight))) ? "---" : "data";
+            pictureExifs.pictureHeight = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageHeight))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagExifImageHeight);
 
             // Get picture file size :
-            pictureExifs.pictureFileSize = (string.IsNullOrEmpty(subMetadataDirectory?.GetDescription(FileMetadataDirectory.TagFileSize))) ? "---" : "data";
+            pictureExifs.pictureFileSize = (string.IsNullOrEmpty(subMetadataDirectory?.GetDescription(FileMetadataDirectory.TagFileSize))) ? "---" : subMetadataDirectory?.GetDescription(FileMetadataDirectory.TagFileSize);
 
 
             return pictureExifs;
