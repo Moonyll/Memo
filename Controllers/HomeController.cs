@@ -91,27 +91,20 @@ namespace ModellsUp.Controllers
 
             // Get original date time :
 
-            var dt =subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal);
+            var dt = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal);
 
-            Regex rgx1 = new Regex(@"\d{2}-\d{2}-\d{4}");
-            Regex rgx2 = new Regex(@"\d{2}:\d{2}:\d{4}");
-            Regex rgx3 = new Regex(@"\d{4}-\d{2}-\d{2}");
-            Regex rgx4 = new Regex(@"\d{4}:\d{2}:\d{2}");
-
-            Regex rgx5 = new Regex(@" \d{2}:\d{2}:\d{2}");
-           
             // Date :
-            var mt1 = rgx1.Match(dt).ToString();
-            var mt2 = rgx2.Match(dt).ToString();
-            var mt3 = rgx3.Match(dt).ToString();
-            var mt4 = rgx4.Match(dt).ToString();
+            Dictionary<string, string> lst = new Dictionary<string, string>()
+            {
+                {"dt1", TestDateTime(pictureControls.RegOrigDtF1, dt)},
+                {"dt2", TestDateTime(pictureControls.RegOrigDtF2, dt)},
+                {"dt3", TestDateTime(pictureControls.RegOrigDtF3, dt)},
+                {"dt4", TestDateTime(pictureControls.RegOrigDtF4, dt)},
+                {"tm",  TestDateTime(pictureControls.RegOrigTm, dt)}
+            };
 
-            var mtd = mt4.ToString().Replace(":","/");
-
-            // Time :
-            //Match mt5 = rgx5.Match(dt)
-
-
+            var rs = lst.Values.Where(value => value.Length>0).ToList();
+                     //.Where(x => x. != null && x.Value != "");
 
             var dtNB = string.Join("", dt.ToCharArray().Where(Char.IsDigit));
 
@@ -156,6 +149,15 @@ namespace ModellsUp.Controllers
 
             return data;
         }
+
+        public string TestDateTime(Regex test, string dtime)
+
+        {
+            var result = test.Match(dtime).ToString();
+
+            return result;
+        }
+
     }
 
 }
