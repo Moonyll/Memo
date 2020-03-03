@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -89,7 +90,36 @@ namespace ModellsUp.Controllers
             pictureExifs.pictureCameraModel = (string.IsNullOrEmpty(subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel))) ? "---" : subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel);
 
             // Get original date time :
-            pictureExifs.pictureOriginalDateTime = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal);
+
+            var dt =subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal);
+
+            Regex rgx1 = new Regex(@"\d{2}-\d{2}-\d{4}");
+            Regex rgx2 = new Regex(@"\d{2}:\d{2}:\d{4}");
+            Regex rgx3 = new Regex(@"\d{4}-\d{2}-\d{2}");
+            Regex rgx4 = new Regex(@"\d{4}:\d{2}:\d{2}");
+
+            Regex rgx5 = new Regex(@" \d{2}:\d{2}:\d{2}");
+           
+            // Date :
+            var mt1 = rgx1.Match(dt).ToString();
+            var mt2 = rgx2.Match(dt).ToString();
+            var mt3 = rgx3.Match(dt).ToString();
+            var mt4 = rgx4.Match(dt).ToString();
+
+            var mtd = mt4.ToString().Replace(":","/");
+
+            // Time :
+            //Match mt5 = rgx5.Match(dt)
+
+
+
+            var dtNB = string.Join("", dt.ToCharArray().Where(Char.IsDigit));
+
+
+            //DateTime dateTime = DateTime.Parse(date);
+
+            //var dt = String.Format("{0:d/M/yyyy HH:mm:ss}", date);
+
 
             // Get aperture value :
             pictureExifs.pictureApertureValue = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture);

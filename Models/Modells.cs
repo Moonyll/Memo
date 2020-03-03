@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModellsUp.Models
 {
@@ -18,7 +20,8 @@ namespace ModellsUp.Models
         public string pictureCameraModel { get; set; }
 
         // Original date time :
-        public string pictureOriginalDateTime { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime pictureOriginalDateTime { get; set; }
 
         // F-Number value :
         public string pictureFnumberValue { get; set; }
