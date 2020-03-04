@@ -92,46 +92,15 @@ namespace ModellsUp.Controllers
             // Get original date time :
             var datetimeString = GetExifData(subIfdDirectory, ExifDirectoryBase.TagDateTimeOriginal);
 
-            // Date :
-            Dictionary<string, string> datetimeDico = new Dictionary<string, string>()
-                    {
-                        {"testDateFormatA", TestDateTimeString(pictureControls.PatternOrigDtFA, datetimeString)},
-                        {"testDateFormatB", TestDateTimeString(pictureControls.PatternOrigDtFB, datetimeString)},
-                        {"testDateFormatC", TestDateTimeString(pictureControls.PatternOrigDtFC, datetimeString)},
-                        {"testDateFormatD", TestDateTimeString(pictureControls.PatternOrigDtFD, datetimeString)},
-                        {"testTimeFormatA", TestDateTimeString(pictureControls.PatternOrigTmFA, datetimeString)}
-                    };
+            var picutreDateTimeValues = (!string.IsNullOrEmpty(datetimeString)) ?
+                                            GetDateTimeValues(datetimeString) :
+                                            new string[]
+                                            {
+                                                pictureControls.EmptyValue,
+                                                pictureControls .EmptyValue
+                                            };
 
-            // Get date & time expressions values from dico :
-            var datetimeValues = datetimeDico.Values.Where(value => value.Length > 0).OrderByDescending(x=>x.Length).ToList();
-
-            // Manage date value ;
-            var dateValue = datetimeValues.ElementAt(0);
-
-            if (dateValue.Contains(":"))
-            {
-                dateValue = dateValue.Replace(":", "/");
-            }
-            if (dateValue.Contains("-"))
-            {
-                dateValue = dateValue.Replace("-", "/");
-            }
-
-            DateTime dateValueFormated;
-
-            bool isDateValueBeenFormated = DateTime.TryParse(dateValue, out dateValueFormated);
-
-            var finalDateValue = (isDateValueBeenFormated) ? dateValueFormated.ToString("dd/MM/yyyy") : dateValue.ToString();
-
-            // Manage time value :
-
-            var timeValue = datetimeValues.ElementAt(1);
-
-            DateTime timeValueFormated;
-            
-            bool isTimeValueBeenFormated = DateTime.TryParse(timeValue, out timeValueFormated);
-
-            var finalTimeValue = (isTimeValueBeenFormated) ? timeValueFormated.ToString("hh:mm:ss") : timeValue.ToString();
+            pictureExifs.pictureOriginalDateTime = pictureControls.DateLabel + picutreDateTimeValues[0] + "   " + pictureControls.TimeLabel + picutreDateTimeValues[1];
 
             // Get aperture value :
             pictureExifs.pictureApertureValue = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture);
@@ -169,12 +138,69 @@ namespace ModellsUp.Controllers
             return data;
         }
 
-        public string TestDateTimeString(Regex patternFormat, string dtimeString)
+        public string TestDateTimeString(Regex patternFormat, string datetimeString)
 
         {
-            var result = patternFormat.Match(dtimeString).ToString();
+            if (string.IsNullOrEmpty(datetimeString))
+            {
+             return null;
+            }
 
-            return result;
+            var stringFromRegexMatching = patternFormat.Match(datetimeString).ToString();
+
+            return stringFromRegexMatching;
+        }
+
+        public string [] GetDateTimeValues(string datetimeString)
+        {
+            string[] datetimeArrayValues = new string[2] { "date", "time" };
+
+            Dictionary<string, string> datetimeDico = new Dictionary<string, string>()
+                    {
+                        {"testDateFormatA", TestDateTimeString(pictureControls.PatternOrigDtFA, datetimeString)},
+                        {"testDateFormatB", TestDateTimeString(pictureControls.PatternOrigDtFB, datetimeString)},
+                        {"testDateFormatC", TestDateTimeString(pictureControls.PatternOrigDtFC, datetimeString)},
+                        {"testDateFormatD", TestDateTimeString(pictureControls.PatternOrigDtFD, datetimeString)},
+                        {"testTimeFormatA", TestDateTimeString(pictureControls.PatternOrigTmFA, datetimeString)}
+                    };
+
+            // Get date & time expressions values from dico :
+            var datetimeValues = datetimeDico.Values.Where(value => value.Length > 0).OrderByDescending(x => x.Length).ToList();
+
+            // 1. Manage date value ;
+            var dateValue = datetimeValues.ElementAt(0);
+
+            if (dateValue.Contains(":"))
+            {
+                dateValue = dateValue.Replace(":", "/");
+            }
+            if (dateValue.Contains("-"))
+            {
+                dateValue = dateValue.Replace("-", "/");
+            }
+
+            DateTime dateValueFormated;
+
+            bool isDateValueBeenFormated = DateTime.TryParse(dateValue, out dateValueFormated);
+
+            var finalDateValue = (isDateValueBeenFormated) ? dateValueFormated.ToString("dd/MM/yyyy") : dateValue.ToString();
+
+            // 2. Manage time value :
+
+            var timeValue = datetimeValues.ElementAt(1);
+
+            DateTime timeValueFormated;
+
+            bool isTimeValueBeenFormated = DateTime.TryParse(timeValue, out timeValueFormated);
+
+            var finalTimeValue = (isTimeValueBeenFormated) ? timeValueFormated.ToString("hh:mm:ss") : timeValue.ToString();
+
+            // Fill the array :
+            datetimeArrayValues[0] = finalDateValue;
+            datetimeArrayValues[1] = finalTimeValue;
+
+            return datetimeArrayValues;
+
         }
 
     }

@@ -21,8 +21,7 @@ namespace ModellsUp.Models
         public string pictureCameraModel { get; set; }
 
         // Original date time :
-        [DataType(DataType.DateTime)]
-        public DateTime pictureOriginalDateTime { get; set; }
+        public string pictureOriginalDateTime { get; set; }
 
         // F-Number value :
         public string pictureFnumberValue { get; set; }
@@ -67,6 +66,10 @@ namespace ModellsUp.Models
         public static Regex PatternOrigDtFC = new Regex(OriginalDateFormatC);
         public static Regex PatternOrigDtFD = new Regex(OriginalDateFormatD);
         public static Regex PatternOrigTmFA = new Regex(OriginalTimeFormatA);
+
+        public const string EmptyValue = "---";
+        public const string DateLabel = "Date : ";
+        public const string TimeLabel = "Heure : ";
     }
 
 }
