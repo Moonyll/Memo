@@ -97,7 +97,7 @@ namespace ModellsUp.Controllers
                                             new string[]
                                             {
                                                 pictureControls.EmptyValue,
-                                                pictureControls .EmptyValue
+                                                pictureControls.EmptyValue
                                             };
 
             pictureExifs.pictureOriginalDateTime = pictureControls.DateLabel + picutreDateTimeValues[0] + "   " + pictureControls.TimeLabel + picutreDateTimeValues[1];

@@ -169,6 +169,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\pictureCollection.cshtml" />
+    <Content Include="Views\Home\pictureDetails.cshtml" />
+    <Content Include="Views\Home\pictureEdit.cshtml" />
+    <Content Include="Views\Home\pictureCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
