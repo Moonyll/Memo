@@ -55,19 +55,19 @@ namespace ModellsUp.Models
     public static class pictureControls
     {
         // Patterns for original date & time regex :
-        public const string OriginalDateFormat1 = @"\d{2}-\d{2}-\d{4}";
-        public const string OriginalDateFormat2 = @"\d{2}:\d{2}:\d{4}";
-        public const string OriginalDateFormat3 = @"\d{4}-\d{2}-\d{2}";
-        public const string OriginalDateFormat4 = @"\d{4}:\d{2}:\d{2}";
-        public const string OriginalTimeFormat = @" \d{2}:\d{2}:\d{2}";
+        public const string OriginalDateFormatA = @"\d{2}-\d{2}-\d{4}";
+        public const string OriginalDateFormatB = @"\d{2}:\d{2}:\d{4}";
+        public const string OriginalDateFormatC = @"\d{4}-\d{2}-\d{2}";
+        public const string OriginalDateFormatD = @"\d{4}:\d{2}:\d{2}";
+        public const string OriginalTimeFormatA = @" \d{2}:\d{2}:\d{2}";
 
-        public static Regex RegOrigDtF1 = new Regex(OriginalDateFormat1);
-        public static Regex RegOrigDtF2 = new Regex(OriginalDateFormat2);
-        public static Regex RegOrigDtF3 = new Regex(OriginalDateFormat3);
-        public static Regex RegOrigDtF4 = new Regex(OriginalDateFormat4);
-        public static Regex RegOrigTm = new Regex(OriginalTimeFormat);
-
-
+        // Regex for original date & time :
+        public static Regex PatternOrigDtFA = new Regex(OriginalDateFormatA);
+        public static Regex PatternOrigDtFB = new Regex(OriginalDateFormatB);
+        public static Regex PatternOrigDtFC = new Regex(OriginalDateFormatC);
+        public static Regex PatternOrigDtFD = new Regex(OriginalDateFormatD);
+        public static Regex PatternOrigTmFA = new Regex(OriginalTimeFormatA);
     }
 
 }
+

@@ -90,29 +90,48 @@ namespace ModellsUp.Controllers
             pictureExifs.pictureCameraModel = (string.IsNullOrEmpty(subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel))) ? "---" : subIfd0Directory?.GetDescription(ExifDirectoryBase.TagModel);
 
             // Get original date time :
-
-            var dt = subIfdDirectory?.GetDescription(ExifDirectoryBase.TagDateTimeOriginal);
+            var datetimeString = GetExifData(subIfdDirectory, ExifDirectoryBase.TagDateTimeOriginal);
 
             // Date :
-            Dictionary<string, string> lst = new Dictionary<string, string>()
+            Dictionary<string, string> datetimeDico = new Dictionary<string, string>()
+                    {
+                        {"testDateFormatA", TestDateTimeString(pictureControls.PatternOrigDtFA, datetimeString)},
+                        {"testDateFormatB", TestDateTimeString(pictureControls.PatternOrigDtFB, datetimeString)},
+                        {"testDateFormatC", TestDateTimeString(pictureControls.PatternOrigDtFC, datetimeString)},
+                        {"testDateFormatD", TestDateTimeString(pictureControls.PatternOrigDtFD, datetimeString)},
+                        {"testTimeFormatA", TestDateTimeString(pictureControls.PatternOrigTmFA, datetimeString)}
+                    };
+
+            // Get date & time expressions values from dico :
+            var datetimeValues = datetimeDico.Values.Where(value => value.Length > 0).OrderByDescending(x=>x.Length).ToList();
+
+            // Manage date value ;
+            var dateValue = datetimeValues.ElementAt(0);
+
+            if (dateValue.Contains(":"))
             {
-                {"dt1", TestDateTime(pictureControls.RegOrigDtF1, dt)},
-                {"dt2", TestDateTime(pictureControls.RegOrigDtF2, dt)},
-                {"dt3", TestDateTime(pictureControls.RegOrigDtF3, dt)},
-                {"dt4", TestDateTime(pictureControls.RegOrigDtF4, dt)},
-                {"tm",  TestDateTime(pictureControls.RegOrigTm, dt)}
-            };
+                dateValue = dateValue.Replace(":", "/");
+            }
+            if (dateValue.Contains("-"))
+            {
+                dateValue = dateValue.Replace("-", "/");
+            }
 
-            var rs = lst.Values.Where(value => value.Length>0).ToList();
-                     //.Where(x => x. != null && x.Value != "");
+            DateTime dateValueFormated;
 
-            var dtNB = string.Join("", dt.ToCharArray().Where(Char.IsDigit));
+            bool isDateValueBeenFormated = DateTime.TryParse(dateValue, out dateValueFormated);
 
+            var finalDateValue = (isDateValueBeenFormated) ? dateValueFormated.ToString("dd/MM/yyyy") : dateValue.ToString();
 
-            //DateTime dateTime = DateTime.Parse(date);
+            // Manage time value :
 
-            //var dt = String.Format("{0:d/M/yyyy HH:mm:ss}", date);
+            var timeValue = datetimeValues.ElementAt(1);
 
+            DateTime timeValueFormated;
+            
+            bool isTimeValueBeenFormated = DateTime.TryParse(timeValue, out timeValueFormated);
+
+            var finalTimeValue = (isTimeValueBeenFormated) ? timeValueFormated.ToString("hh:mm:ss") : timeValue.ToString();
 
             // Get aperture value :
             pictureExifs.pictureApertureValue = (string.IsNullOrEmpty(subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture))) ? "---" : subIfdDirectory?.GetDescription(ExifDirectoryBase.TagAperture);
@@ -150,10 +169,10 @@ namespace ModellsUp.Controllers
             return data;
         }
 
-        public string TestDateTime(Regex test, string dtime)
+        public string TestDateTimeString(Regex patternFormat, string dtimeString)
 
         {
-            var result = test.Match(dtime).ToString();
+            var result = patternFormat.Match(dtimeString).ToString();
 
             return result;
         }
