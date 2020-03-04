@@ -13,6 +13,22 @@ namespace ModellsUp.Models
     }
     public class pictureExifMetaData
     {
+        // Constant string values to display :
+
+        public const string EmptyValue = "---";
+
+        public const string SpaceTabulation = "\u2003";
+
+        public const string TabEmpty = "\u2003---";
+
+        public const string KiloOctets = " Ko";
+
+        public const string MegaOctets = " Mo";
+
+        public const string Pixels = " px";
+
+        public const string ISO = " iso";
+
 
         // Camera make :
         public string pictureCameraMake { get; set; }
@@ -47,12 +63,41 @@ namespace ModellsUp.Models
         // Picture height :
         public string pictureHeight { get; set; }
 
+        // Picture dimensions:
+        public string pictureDimensions { get; set; }
+
         // Picture file size :
         public string pictureFileSize { get; set; }
 
     }
     public static class pictureControls
     {
+
+        // Regex & error message for the titles :
+        public const string PatternForPictureTitles = @"^[0-9\-._/A-Za-z\u00C0-\u017F]+$";
+        public const string ErrorForPictureTitles = "Veuillez renseigner un titre valide.";
+
+        // Regex & error message for the description (blank space authorized) :
+        public const string PatternForPictureDescription = @"^[ 0-9\-._/A-Za-z\u00C0-\u017F]+$";
+        public const string ErrorForPictureDescription = "Veuillez renseigner une description valide.";
+
+        // Regex & error message for the url :
+        public const string PatternForpictureStandardUrl = @"^[0-9\-._/A-Za-z\u00C0-\u017F]+$";
+        public const string ErrorForpictureStandardUrl = "Veuillez saisir un nom valide";
+
+        // Upload file picture attributes limitations :
+
+        // Size
+        public const int pictureFileToUploadMaxSize = 7000000;
+        public const string errorMessageForPictureOutOfSize = "La taille maximale de l'image doit être de 7 Mo.";
+
+        // Extension :
+        public static string[] pictureFileToUploadExtension = { "image/jpg", "image/jpeg" };
+        public const string errorMessageForPictureOutOfExt = "L'image doit être au format jpg / jpeg";
+
+        // Diretory :
+        public const string pictureFileDirectory = "~/Content/Images/Pictures/";
+
         // Patterns for original date & time regex :
         public const string OriginalDateFormatA = @"\d{2}-\d{2}-\d{4}";
         public const string OriginalDateFormatB = @"\d{2}:\d{2}:\d{4}";
