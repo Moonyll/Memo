@@ -13,13 +13,16 @@ using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using MetadataExtractor.Formats.FileSystem;
 using Modells.Models;
-using ModellsUp.Models;
 
 namespace Modells.Controllers
 {
     public class PicturesController : Controller
     {
         private picturesModells db = new picturesModells();
+
+        //public static SelectList selectionList = new SelectList(db.category, "categoryId", "categoryName");
+
+        #region PICTURE COLLECTION
 
         /// <summary>
         /// List of pictures.
@@ -28,10 +31,9 @@ namespace Modells.Controllers
         public ActionResult Index()
         {
             // Picture list :
-            var picture = db.picture
-                            .Include(p => p.category);
+            var picture = db.picture.Include(p => p.category);
 
-            return View(picture.ToList());
+                return View(picture.ToList());
         }
 
         /// <summary>
@@ -41,16 +43,15 @@ namespace Modells.Controllers
         /// <returns></returns>
         public ActionResult pictureCollection(int? pageToDisplay)
         {
-            #region Get Pictures List
-            
+            #region Get pictures list
+
             // Picture list :
-            var pictureList = db.picture
-                                .Include(p => p.category);
+            var pictureList = db.picture.Include(p => p.category);
 
             #endregion
 
             #region Generate pagination
-            
+
             // Total number of pictures :
             var numberOfTotalPics = pictureList.Count();
 
@@ -58,81 +59,121 @@ namespace Modells.Controllers
             int numberOfPicsToDisplayPerPage = 8;
 
             // Number of pages :
-            var n = (decimal)numberOfTotalPics / numberOfPicsToDisplayPerPage;
+            var decimalNumberOfPages = (decimal)numberOfTotalPics / numberOfPicsToDisplayPerPage;
 
             // Nombre de pages arrondi au plafond supérieur :
-            var numberOfPages = Math.Ceiling(n);
+            var numberOfPages = Math.Ceiling(decimalNumberOfPages);
 
             // Element to display according to the page number :
             var elementToDisplay = (pageToDisplay == null) ? 0 : (int)pageToDisplay;
 
             // Total element :
-            var pictures = pictureList
-                           .ToList()
-                           .Skip((elementToDisplay - 1) * 8)
-                           .Take(8);
+            var pictures = pictureList.Skip((elementToDisplay - 1) * numberOfPicsToDisplayPerPage)
+                                      .Take(numberOfPicsToDisplayPerPage)
+                                      .ToList();
 
             // Total element per page :
             var numberOfPicturesCurrentPage = pictures.Count();
 
-            // Viewbags to pass data in the view :
-            ViewBag.totalPictures = numberOfPicturesCurrentPage;
-            ViewBag.totalPages = numberOfPages;
-            
+            // Index limit :
+            var indexLimit = numberOfPicturesCurrentPage - 1;
+
             #endregion
 
-            return View(pictures);
+            #region Generate picture table
+
+            // Table of pictures to display :
+            var pictureElements = new string[8, 6];
+
+            for (int index = 0; index <= 7; index++)
+            {
+                var pictureUrlToLoad = (index <= indexLimit) ? pictures.ElementAt(index).pictureStandardUrl : null;
+
+                // Load the picture of database at index :
+
+                if (pictureUrlToLoad != null)
+                {
+                    // Picture Url :
+                    pictureElements[index, 0] = pictureControls.pictureFileDirectory + pictures.ElementAt(index).pictureStandardUrl.ToString();
+
+                    // Picture Title :
+                    pictureElements[index, 1] = pictures.ElementAt(index).pictureTitle.ToString();
+
+                    // Picture Alternative title :
+                    pictureElements[index, 2] = pictures.ElementAt(index).pictureAlternateTitle.ToString();
+
+                    // Picture Description :
+                    pictureElements[index, 3] = pictures.ElementAt(index).pictureDescription.ToString();
+
+                    // Picture Category :
+                    pictureElements[index, 4] = pictures.ElementAt(index).category.categoryName.ToString();
+
+                    // Picture Id :
+                    pictureElements[index, 5] = pictures.ElementAt(index).pictureId.ToString();
+                }
+
+                else
+                {
+                    // Load the default picture if database ones not exists :
+                    pictureElements[index, 0] = "/Content/Images/Pictures/smile.jpg";
+                    pictureElements[index, 1] = "Default picture main title";
+                    pictureElements[index, 2] = "Default picture alt title";
+                    pictureElements[index, 3] = "Default picture description";
+                    pictureElements[index, 4] = "Default picture category";
+                    pictureElements[index, 5] = "Default picture id";
+                }
+            }
+
+            #endregion
+
+            #region Passing data to view
+            
+            // Set viewbag & viewdata :
+
+            ViewData["pictureElements"] = pictureElements;
+
+            ViewBag.totalPages = numberOfPages;
+
+            #endregion
+
+            return View();
         }
 
-        //// GET: pictures/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    picture picture = db.picture.Find(id);
-        //    if (picture == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(picture);
-        //}
+        #endregion
 
-        //// GET: pictures/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.categoryId = new SelectList(db.category, "categoryId", "categoryName");
-        //    return View();
-        //}
-
-        //// GET: picturesCreate
-        //public ActionResult pictureCreate()
-        //{
-        //    ViewBag.categoryId = new SelectList(db.category, "categoryId", "categoryName");
-        //    return View();
-        //}
+        #region PICTURE CREATION
 
         /// <summary>
-        /// Create a new picture - Save the source in the directory & properties in the database.
+        /// Http Get - Picture creation.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult pictureCreate()
+        {
+            ViewBag.categoryId = new SelectList(db.category, "categoryId", "categoryName");
+
+            return View();
+        }
+
+        /// <summary>
+        /// Http Post - Create a new picture - Save the source in the directory & properties in the database.
         /// </summary>
         /// <param name="newPicture"></param>
         /// <param name="newPictureToUpload"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult pictureCreate ([Bind(Include = "pictureId," +
+        public ActionResult pictureCreate([Bind(Include = "pictureId," +
                                                            "pictureTitle," +
                                                            "pictureAlternateTitle," +
                                                            "pictureDescription," +
                                                            "pictureStandardUrl," +
                                                            "categoryId")]
                                             picture newPicture,
-                                            HttpPostedFileBase newPictureToUpload
-                                           )
+                                             HttpPostedFileBase newPictureToUpload
+                                            )
         {
             #region Generate a dropdownlist
-            
+
             // Display a dropdownlist for the picture categories in the view :
             ViewBag.categoryId = new SelectList(db.category, "categoryId", "categoryName", newPicture.categoryId);
 
@@ -201,7 +242,7 @@ namespace Modells.Controllers
 
                 db.SaveChanges();
 
-                    return RedirectToAction("pictureSuccess");
+                return RedirectToAction("pictureSuccess");
             }
 
             #endregion
@@ -209,40 +250,9 @@ namespace Modells.Controllers
             return View(newPicture);
         }
 
-        //// POST: pictures/Create
-        //// Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        //// plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "pictureId,pictureTitle,pictureAlternateTitle,pictureDescription,pictureStandardUrl,pictureRatingValue,pictureViewsNumber,categoryId")] picture picture)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.picture.Add(picture);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+        #endregion
 
-        //    ViewBag.categoryId = new SelectList(db.category, "categoryId", "categoryName", picture.categoryId);
-        //    return View(picture);
-        //}
-
-        // GET: pictures/Edit/5
-        //[HttpGet]
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    picture picture = db.picture.Find(id);
-        //    if (picture == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.categoryId = new SelectList(db.category, "categoryId", "categoryName", picture.categoryId);
-        //    return View(picture);
-        //}
+        #region PICTURE EDITION
 
         // GET: pictures/Edit/5
         [HttpGet]
@@ -252,39 +262,15 @@ namespace Modells.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            picture picture = db.picture
-                                .Find(id);
-
+            picture picture = db.picture.Find(id);
             if (picture == null)
             {
                 return HttpNotFound();
             }
-
             ViewBag.categoryId = new SelectList(db.category, "categoryId", "categoryName", picture.categoryId);
-
             return View(picture);
         }
 
-        // POST: pictures/Edit/5
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "pictureId,pictureTitle,pictureAlternateTitle,pictureDescription,pictureStandardUrl,pictureRatingValue,pictureViewsNumber,categoryId")] picture picture)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(picture).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.categoryId = new SelectList(db.category, "categoryId", "categoryName", picture.categoryId);
-        //    return View(picture);
-        //}
-
-        // POST: pictures/Edit/5
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult pictureEdit([Bind(Include = "pictureId,pictureTitle,pictureAlternateTitle,pictureDescription,pictureStandardUrl,pictureRatingValue,pictureViewsNumber,categoryId")] picture updatePicture)
@@ -292,16 +278,16 @@ namespace Modells.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(updatePicture).State = EntityState.Modified;
-
                 db.SaveChanges();
-
-                    return RedirectToAction("pictureCollection");
+                return RedirectToAction("pictureCollection");
             }
-
             ViewBag.categoryId = new SelectList(db.category, "categoryId", "categoryName", updatePicture.categoryId);
-
             return View(updatePicture);
         }
+
+        #endregion
+
+        #region PICTURE REMOVING
 
         // GET: pictures/Delete/5
         public ActionResult Delete(int? id)
@@ -310,9 +296,7 @@ namespace Modells.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            picture picture = db.picture
-                                .Find(id);
-
+            picture picture = db.picture.Find(id);
             if (picture == null)
             {
                 return HttpNotFound();
@@ -325,15 +309,15 @@ namespace Modells.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            picture picture = db.picture
-                                .Find(id);
-
+            picture picture = db.picture.Find(id);
             db.picture.Remove(picture);
-
             db.SaveChanges();
-
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
+
+        #endregion
+
+        #region PICTURE VIEWS
 
         // Display home view :
         public ActionResult pictureHome()
@@ -353,6 +337,10 @@ namespace Modells.Controllers
             return View();
         }
 
+        #endregion
+
+        #region PROTECTION
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -361,6 +349,8 @@ namespace Modells.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #endregion
 
         #region EXIFS Management
 
@@ -375,30 +365,21 @@ namespace Modells.Controllers
             pictureExifMetaData pictureExifs = new pictureExifMetaData();
 
             // Retrieve picture file path :
-            var pathPictureFile = Server
-                                  .MapPath(pictureFile);
+            var pathPictureFile = Server.MapPath(pictureFile);
 
             // Retrieve directories of picture file properties :
-            var pictureDirectories = ImageMetadataReader
-                                     .ReadMetadata(pathPictureFile)
-                                     .ToList();
+            var pictureDirectories = ImageMetadataReader.ReadMetadata(pathPictureFile).ToList();
 
             // 1° Read directories metadata files :
 
             // Read "Exif IFD0" directory file :
-            var subIfd0Directory = pictureDirectories
-                                   .OfType<ExifIfd0Directory>()
-                                   .FirstOrDefault();
+            var subIfd0Directory = pictureDirectories.OfType<ExifIfd0Directory>().FirstOrDefault();
 
             // Read "Exif SubIFD" directory file :
-            var subIfdDirectory = pictureDirectories
-                                  .OfType<ExifSubIfdDirectory>()
-                                  .FirstOrDefault();
+            var subIfdDirectory = pictureDirectories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
 
             // Read "MetadataDirectory" directory file :
-            var subMetadataDirectory = pictureDirectories
-                                       .OfType<FileMetadataDirectory>()
-                                       .FirstOrDefault();
+            var subMetadataDirectory = pictureDirectories.OfType<FileMetadataDirectory>().FirstOrDefault();
 
             // 2° Get Exifs data from read file :
 
@@ -411,38 +392,15 @@ namespace Modells.Controllers
             // Get original date time :
             var datetimeString = GetExifData(subIfdDirectory, ExifDirectoryBase.TagDateTimeOriginal);
 
-            // Date :
-            Dictionary<string, string> datetimeDico = new Dictionary<string, string>()
-                    {
-                        {"testDateFormatA", TestDateTimeString(pictureControls.PatternOrigDtFA, datetimeString)},
-                        {"testDateFormatB", TestDateTimeString(pictureControls.PatternOrigDtFB, datetimeString)},
-                        {"testDateFormatC", TestDateTimeString(pictureControls.PatternOrigDtFC, datetimeString)},
-                        {"testDateFormatD", TestDateTimeString(pictureControls.PatternOrigDtFD, datetimeString)},
-                        {"testTimeFormatA", TestDateTimeString(pictureControls.PatternOrigTmFA, datetimeString)}
-                    };
+            var picutreDateTimeValues = (!string.IsNullOrEmpty(datetimeString)) ?
+                                    GetDateTimeValues(datetimeString) :
+                                    new string[]
+                                    {
+                                                pictureExifMetaData.EmptyValue,
+                                                pictureExifMetaData.EmptyValue
+                                    };
 
-            var datetimeValues = datetimeDico.Values.Where(value => value.Length > 0).ToList();
-
-            var dateValue = datetimeValues.ElementAt(0);
-            if (dateValue.Contains(":"))
-            {
-                dateValue = dateValue.Replace(":", "/");
-            }
-            if (dateValue.Contains("-"))
-            {
-                dateValue = dateValue.Replace("-", "/");
-            }
-
-            var timeValue = datetimeValues.ElementAt(1);
-
-            // DateTime res ;
-            DateTime date = DateTime.Parse(dateValue);
-            var toto = date.ToString("dd/MM/yyyy");
-
-            DateTime time = DateTime.Parse(timeValue);
-            var totoa = time.ToString("hh:mm:ss");
-
-            pictureExifs.pictureOriginalDateTime = GetExifData(subIfdDirectory, ExifDirectoryBase.TagDateTimeOriginal);
+            pictureExifs.pictureOriginalDateTime = pictureExifMetaData.DateLabel + picutreDateTimeValues[0] + "   " + pictureExifMetaData.TimeLabel + picutreDateTimeValues[1];
 
             // Get aperture value :
             pictureExifs.pictureApertureValue = GetExifData(subIfdDirectory, ExifDirectoryBase.TagAperture);
@@ -510,33 +468,26 @@ namespace Modells.Controllers
         public string DisplayPictureSize(string exifDataTagFileSize)
         {
             // Extract bytes numbers of picture file size :
-            var extractBytesNumbers = string.Join("", exifDataTagFileSize
-                                                      .ToCharArray()
-                                                      .Where(Char.IsDigit)
-                                                 );
+            var extractBytesNumbers = string.Join("", exifDataTagFileSize.ToCharArray().Where(Char.IsDigit));
 
             // Convert bytes to Ko :
             var convertNumbersToKo = Math.Round(Convert.ToDecimal(extractBytesNumbers) / 1000);
 
             // Display picture file size in Ko :
-            var displayPictureFileSize = pictureExifMetaData.SpaceTabulation
-                                         + convertNumbersToKo
-                                         + pictureExifMetaData.KiloOctets;
+            var displayPictureFileSize = pictureExifMetaData.SpaceTabulation + convertNumbersToKo + pictureExifMetaData.KiloOctets;
 
             // Diplay picture file size in Mo : 
             if (convertNumbersToKo >= 1000)
             {
                 var convertNumbersToMo = Math.Round(convertNumbersToKo / 1000);
-
-                return displayPictureFileSize = pictureExifMetaData.SpaceTabulation
-                                                + convertNumbersToMo
-                                                + pictureExifMetaData.MegaOctets;
+                return displayPictureFileSize = pictureExifMetaData.SpaceTabulation + convertNumbersToMo + pictureExifMetaData.MegaOctets;
             }
-                return displayPictureFileSize;
+
+            return displayPictureFileSize;
         }
 
         /// <summary>
-        /// Display dimension value of picture width & height.
+        ///  Display dimension value of picture width & height.
         /// </summary>
         /// <param name="exifDataTagDimension"></param>
         /// <returns></returns>
@@ -546,22 +497,81 @@ namespace Modells.Controllers
             if (exifDataTagDimension != pictureExifMetaData.TabEmpty)
             {
                 // Extract pixels dimension numbers of picture width or height :
-                var displayDimensionNumbers = string.Join("", exifDataTagDimension
-                                                              .ToCharArray()
-                                                              .Where(Char.IsDigit)
-                                                         );
+                var displayDimensionNumbers = string.Join("", exifDataTagDimension.ToCharArray().Where(Char.IsDigit));
+
                 return displayDimensionNumbers;
             }
-                return exifDataTagDimension;
+
+            return exifDataTagDimension;
         }
 
-        public string TestDateTimeString(Regex patternFormat, string dtimeString)
-        {
-            var result = patternFormat
-                         .Match(dtimeString)
-                         .ToString();
+        public string TestDateTimeString(Regex patternFormat, string datetimeString)
 
-            return result;
+        {
+            if (string.IsNullOrEmpty(datetimeString))
+            {
+                return null;
+            }
+
+            var stringFromRegexMatching = patternFormat.Match(datetimeString).ToString();
+
+            return stringFromRegexMatching;
+        }
+
+        public string[] GetDateTimeValues(string datetimeString)
+        {
+            string[] datetimeArrayValues = new string[2] { "date", "time" };
+
+            Dictionary<string, string> datetimeDico = new Dictionary<string, string>()
+                    {
+                        {"testDateFormatA", TestDateTimeString(pictureControls.PatternOrigDtFA, datetimeString)},
+                        {"testDateFormatB", TestDateTimeString(pictureControls.PatternOrigDtFB, datetimeString)},
+                        {"testDateFormatC", TestDateTimeString(pictureControls.PatternOrigDtFC, datetimeString)},
+                        {"testDateFormatD", TestDateTimeString(pictureControls.PatternOrigDtFD, datetimeString)},
+                        {"testTimeFormatA", TestDateTimeString(pictureControls.PatternOrigTmFA, datetimeString)}
+                    };
+
+            // Get date & time expressions values from dico :
+            var datetimeValues = datetimeDico.Values.Where(value => value.Length > 0).OrderByDescending(x => x.Length).ToList();
+
+            if (datetimeValues.Count > 0)
+            {
+
+                // 1. Manage date value ;
+                var dateValue = datetimeValues.ElementAt(0);
+
+                if (dateValue.Contains(":"))
+                {
+                    dateValue = dateValue.Replace(":", "/");
+                }
+                if (dateValue.Contains("-"))
+                {
+                    dateValue = dateValue.Replace("-", "/");
+                }
+
+                DateTime dateValueFormated;
+
+                bool isDateValueBeenFormated = DateTime.TryParse(dateValue, out dateValueFormated);
+
+                var finalDateValue = (isDateValueBeenFormated) ? dateValueFormated.ToString("dd/MM/yyyy") : dateValue.ToString();
+
+                // 2. Manage time value :
+
+                var timeValue = datetimeValues.ElementAt(1);
+
+                DateTime timeValueFormated;
+
+                bool isTimeValueBeenFormated = DateTime.TryParse(timeValue, out timeValueFormated);
+
+                var finalTimeValue = (isTimeValueBeenFormated) ? timeValueFormated.ToString("hh:mm:ss") : timeValue.ToString();
+
+                // Fill the array :
+                datetimeArrayValues[0] = finalDateValue;
+                datetimeArrayValues[1] = finalTimeValue;
+            }
+
+            return datetimeArrayValues;
+
         }
 
         #endregion
