@@ -170,4 +170,26 @@
         public string pictureFileSize { get; set; }
 
     }
+
+    public class pictureGlobalLabels
+    {
+        public const string PictureMainTitle = "titre";
+
+        public const string PictureAlTitle = "titre alternatif";
+
+        public const string PictureDecription = "description";
+
+        public const string AddPicture = "Ajouter image";
+
+        public const string BackToColl = "Retour collection";
+
+        public const string ResetForm = "Réinitialiser";
+
+        public const string PreviewImgMTitle = "Aperçu image";
+
+        public const string PreviewImgATitle = "Ici votre image";
+
+        public const string DefaultPictureUrl = "~/Content/Images/Pictures/upload.png";
+
+    }
 }
