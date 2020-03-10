@@ -12,39 +12,44 @@
     <input type="submit" value="Upload" class="submit" />
 }
 
+<link href="~/Content/Site.css" rel="stylesheet" />
 
-@if (Model!=null)
+@if (Model != null)
 {
-@*Display picture exifs :*@
-<div class="border border-primary mx-auto text-left exifsData" id="exifsInfos">
-    <ul>
+    @*Display picture exifs :*@
+    <div class="border border-primary mx-auto text-left exifsData" id="exifsInfos">
+        <ul>
 
-        @*Display camera make :*@
-        <li><i class="fas fa-industry"></i><span id="picCameraMake">@Model.pictureCameraMake</span></li>
+            @*Display camera make :*@
+            <li><span id="picCameraMake">@Model.pictureCameraMake</span></li>
 
-        @*Display camera model :*@
-        <li><i class="fas fa-camera"></i><span id="picCameraModel">@Model.pictureCameraModel</span></li>
+            @*Display camera model :*@
+            <li><span id="picCameraModel">@Model.pictureCameraModel</span></li>
 
-        @*Display picture date time :*@
-        <li><i class="far fa-calendar-alt"></i><span id="pictureOriginalDateTime">@Model.pictureOriginalDateTime</span></li>
+            @*Display picture date time :*@
+            <li><span id="pictureOriginalDateTime">@Model.pictureOriginalDateTime</span></li>
 
-        @*Display picture exposure time :*@
-        <li><i class="fab fa-chrome"></i><span id="pictureExposureTime">@Model.pictureExposureTime</span></li>
+            @*Display picture exposure time :*@
+            <li><span id="pictureExposureTime">@Model.pictureExposureTime</span></li>
 
-        @*Display picture speed ratings :*@
-        <li><i class="far fa-lightbulb"></i><span id="pictureIsoSpeedRatings">@Model.pictureIsoSpeedRatings</span></li>
+            @*Display picture speed ratings :*@
+            <li><span id="pictureIsoSpeedRatings">@Model.pictureIsoSpeedRatings</span></li>
 
-        @*Display picture focal length :*@
-        <li><i class="fas fa-ruler-horizontal"></i><span id="pictureFocalLength">@Model.pictureFocalLength</span></li>
+            @*Display picture focal length :*@
+            <li><span id="pictureFocalLength">@Model.pictureFocalLength</span></li>
 
-        @*Display picture flash :*@
-        <li><i class="fas fa-bolt"></i><span id="pictureFlash">@Model.pictureFlash</span></li>
+            @*Display picture flash :*@
+            <li><span id="pictureFlash">@Model.pictureFlash</span></li>
 
-        @*Display picture height :*@
-        <li><i class="fas fa-ruler-combined"></i><span id="pictureHeight">@Model.pictureHeight</span></li>
+            @*Display picture height :*@
+            <li><span id="pictureHeight">@Model.pictureHeight</span></li>
 
-        @*Display picture width :*@
-        <li><i class="fas fa-ruler-combined"></i><span id="pictureWidth">@Model.pictureWidth</span></li>
-    </ul>
-</div>
+            @*Display picture width :*@
+            <li><span id="pictureWidth">@Model.pictureWidth</span></li>
+        </ul>
+    </div>
 }
+
+<div class="test" >
+    <img src="~/Content/Images/forest.jpg" style="height:300px;width:250px" />
+</div> 

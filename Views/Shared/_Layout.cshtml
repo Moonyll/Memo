@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!--Load CSS for FontAwesome Icons :-->
-    <link href="~/Content/Icons/css/all.css" rel="stylesheet">
+
     <title>@ViewBag.Title - Modells</title>
 
     <!--Load the CSS bundles styles :-->
@@ -20,7 +20,7 @@
     <!--Load the modernizr / jquery / popper bundles scripts.-->
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/popper")
+ 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
@@ -34,20 +34,19 @@
     <!--Navigation Bar :-->
     <nav class="bg-transparent border border-dark">
         
-        <!--Application Logo :-->
-        <img src="~/Content/Images/Logos/modells.jpg" class="btn img-fluid p-1 logobrand" alt="modells" />
+       
 
         <div class="btn-group p-1 logobrand float-right" role="group">
             <button type="button" class="btn btn-dark" onclick="location.href='@Url.Action("pictureHome", "Pictures")'" data-toggle="tooltip" data-placement="bottom" title="Accueil">
-                <i class="fas fa-home"></i>
+               
             </button>
 
             <button type="button" class="btn btn-dark" onclick="location.href='@Url.Action("pictureCollection", "Pictures")'" data-toggle="tooltip" data-placement="bottom" title="Collection">
-                <i class="far fa-images"></i>
+               
             </button>
 
             <button type="button" class="btn btn-dark" onclick="location.href='@Url.Action("pictureCreate", "Pictures")'" data-toggle="tooltip" data-placement="bottom" title="Ajouter image">
-                <i class="far fa-image"></i>
+              
             </button>
         </div>
     </nav>

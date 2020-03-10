@@ -127,15 +127,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\HomeController2.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\category.cs" />
     <Compile Include="Models\Modells.cs" />
-    <Compile Include="Models\Modells2.cs" />
-    <Compile Include="Models\picture.cs" />
-    <Compile Include="Models\picturesModells.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,14 +169,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\pictureCollection.cshtml" />
-    <Content Include="Views\Home\pictureDetails.cshtml" />
-    <Content Include="Views\Home\pictureEdit.cshtml" />
-    <Content Include="Views\Home\pictureCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\HomeController2\" />
+    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

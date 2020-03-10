@@ -22,3 +22,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.test {
+    background-image: url(/Content/Images/DSC_0003.jpg);
+}

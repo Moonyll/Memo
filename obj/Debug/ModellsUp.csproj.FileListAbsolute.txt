@@ -48,6 +48,7 @@ C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\roslyn\vbc.rsp
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\roslyn\VBCSCompiler.exe
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\Antlr3.Runtime.dll
+C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\MetadataExtractor.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\Newtonsoft.Json.dll
@@ -59,6 +60,8 @@ C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\System.Web.WebPages.Deploy
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\System.Web.WebPages.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\System.Web.WebPages.Razor.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\WebGrease.dll
+C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\XmpCore.dll
+C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\MetadataExtractor.xml
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\System.Web.Helpers.xml
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\System.Web.Mvc.xml
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\System.Web.Optimization.xml
@@ -68,6 +71,7 @@ C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\System.Web.WebPages.Deploy
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\System.Web.WebPages.Razor.xml
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\Newtonsoft.Json.xml
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\Antlr3.Runtime.pdb
+C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\XmpCore.xml
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\fr\System.Web.Helpers.resources.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\fr\System.Web.Mvc.resources.dll
@@ -76,12 +80,8 @@ C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\fr\System.Web.Razor.resour
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\fr\System.Web.WebPages.resources.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\fr\System.Web.WebPages.Deployment.resources.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\fr\System.Web.WebPages.Razor.resources.dll
-C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\obj\Debug\ModellsUp.csprojAssemblyReference.cache
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\obj\Debug\ModellsUp.csproj.CoreCompileInputs.cache
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\obj\Debug\ModellsUp.csproj.CopyComplete
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\obj\Debug\ModellsUp.dll
 C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\obj\Debug\ModellsUp.pdb
-C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\MetadataExtractor.dll
-C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\XmpCore.dll
-C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\MetadataExtractor.xml
-C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\bin\XmpCore.xml
+C:\Users\s.pouwels\Desktop\Memento\Memo\ModellsUp\obj\Debug\ModellsUp.csprojAssemblyReference.cache
