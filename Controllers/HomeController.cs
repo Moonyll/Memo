@@ -45,7 +45,7 @@ namespace ModellsUp.Controllers
                 // file is uploaded
                 pictureToUpload.SaveAs(path);
 
-                pictureExifs = GetExifs(path);
+                //pictureExifs = GetExifs(path);
 
                 // save the image path path to the database or you can send image 
                 // directly to database
@@ -131,12 +131,12 @@ namespace ModellsUp.Controllers
                                      );
 
                 var picutreDateTimeValues = (!string.IsNullOrEmpty(datetimeString)) ?
-                                                  GetDateTimeValues(datetimeString) :
-                                                  new string[]
-                                                  {
-                                                    pictureExifMetaData.EmptyValue,
-                                                    pictureExifMetaData.EmptyValue
-                                                  };
+                                            GetDateTimeValues(datetimeString) :
+                                            new string[]
+                                            {
+                                              pictureExifMetaData.EmptyValue,
+                                              pictureExifMetaData.EmptyValue
+                                            };
 
                 pictureExifs.pictureOriginalDateTime = pictureExifMetaData.SpaceTabulation +
                                                        picutreDateTimeValues[0] +
@@ -164,8 +164,8 @@ namespace ModellsUp.Controllers
                                      );
                 
                 pictureExifs.pictureIsoSpeedRatings = (isoSpeedValues != pictureExifMetaData.TabEmpty) ?
-                                                              isoSpeedValues + pictureExifMetaData.ISO :
-                                                              isoSpeedValues;
+                                                       isoSpeedValues + pictureExifMetaData.ISO :
+                                                       isoSpeedValues;
                 // Get picture flash :
                 pictureExifs.pictureFlash = GetExifData
                                             (
@@ -204,10 +204,13 @@ namespace ModellsUp.Controllers
                                              pictureExifs.pictureHeight +
                                              pictureExifMetaData.Pixels;
 
-                pictureExifs.pictureDimensions = (pictureExifs.pictureWidth != pictureExifMetaData.TabEmpty 
-                                                 && pictureExifs.pictureHeight != pictureExifMetaData.TabEmpty) ?
-                                                                                         pictureWeightAndHeight :
-                                                                                         pictureExifMetaData.TabEmpty;
+                pictureExifs.pictureDimensions = (
+                                                    pictureExifs.pictureWidth != pictureExifMetaData.TabEmpty
+                                                    &&
+                                                    pictureExifs.pictureHeight != pictureExifMetaData.TabEmpty
+                                                 ) ?
+                                                 pictureWeightAndHeight :
+                                                 pictureExifMetaData.TabEmpty;
                 // Get picture file size :
                 pictureExifs.pictureFileSize = DisplayPictureSize
                                                (
@@ -236,7 +239,7 @@ namespace ModellsUp.Controllers
 
             var pictureExifData = (!string.IsNullOrEmpty(exifData)) ?
                                   (pictureExifMetaData.SpaceTabulation + exifData) :
-                                  (pictureExifMetaData.TabEmpty);
+                                   pictureExifMetaData.TabEmpty;
 
             return pictureExifData;
         }
@@ -249,8 +252,12 @@ namespace ModellsUp.Controllers
         public string DisplayPictureSize(string exifDataTagFileSize)
         {
             // Extract bytes numbers of picture file size :
-            var extractBytesNumbers = string.Join("", exifDataTagFileSize.ToCharArray().Where(Char.IsDigit));
-
+            var extractBytesNumbers = string.Join(
+                                                    "",
+                                                    exifDataTagFileSize
+                                                    .ToCharArray()
+                                                    .Where(Char.IsDigit)
+                                                 );
             // Convert bytes to Ko :
             var convertNumbersToKo = Math.Round(Convert.ToDecimal(extractBytesNumbers) / 1000);
 
@@ -283,7 +290,13 @@ namespace ModellsUp.Controllers
             if (exifDataTagDimension != pictureExifMetaData.TabEmpty)
             {
                 // Extract pixels dimension numbers of picture width or height :
-                var displayDimensionNumbers = string.Join("", exifDataTagDimension.ToCharArray().Where(Char.IsDigit));
+                var displayDimensionNumbers = string
+                                              .Join(
+                                                        "",
+                                                        exifDataTagDimension
+                                                        .ToCharArray()
+                                                        .Where(Char.IsDigit)
+                                                   );
 
                 return displayDimensionNumbers;
             }
@@ -299,15 +312,20 @@ namespace ModellsUp.Controllers
                 return null;
             }
 
-            var stringFromRegexMatching = patternFormat.Match(datetimeString)
-                                                       .ToString();
+            var stringFromRegexMatching = patternFormat
+                                          .Match(datetimeString)
+                                          .ToString();
 
             return stringFromRegexMatching;
         }
 
         public string[] GetDateTimeValues(string datetimeString)
         {
-            string[] datetimeArrayValues = new string[2] { pictureExifMetaData.EmptyValue, pictureExifMetaData.EmptyValue };
+            string[] datetimeArrayValues = new string[2]
+                                           {
+                                               pictureExifMetaData.EmptyValue,
+                                               pictureExifMetaData.EmptyValue
+                                           };
 
             Dictionary<string, string> datetimeDico = new Dictionary<string, string>()
             {
@@ -342,8 +360,10 @@ namespace ModellsUp.Controllers
 
                 bool isDateValueBeenFormated = DateTime.TryParse(dateValue, out dateValueFormated);
 
-                var finalDateValue = (isDateValueBeenFormated) ? dateValueFormated.ToString("dd/MM/yyyy")
-                                                               : dateValue.ToString();
+                var finalDateValue = (isDateValueBeenFormated) ?
+                                     dateValueFormated.ToString("dd/MM/yyyy") :
+                                     dateValue.ToString();
+                
                 // 2. Manage time value :
 
                 var timeValue = datetimeValues.ElementAt(1);
@@ -352,8 +372,10 @@ namespace ModellsUp.Controllers
 
                 bool isTimeValueBeenFormated = DateTime.TryParse(timeValue, out timeValueFormated);
 
-                var finalTimeValue = (isTimeValueBeenFormated) ? timeValueFormated.ToString("hh:mm:ss")
-                                                               : timeValue.ToString();
+                var finalTimeValue = (isTimeValueBeenFormated) ?
+                                     timeValueFormated.ToString("hh:mm:ss") :
+                                     timeValue.ToString();
+
                 // Fill the array :
                 datetimeArrayValues[0] = finalDateValue;
                 datetimeArrayValues[1] = finalTimeValue;
