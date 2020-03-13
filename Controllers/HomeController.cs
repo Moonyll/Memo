@@ -45,7 +45,7 @@ namespace ModellsUp.Controllers
                 // file is uploaded
                 pictureToUpload.SaveAs(path);
 
-                //pictureExifs = GetExifs(path);
+                pictureExifs = GetExifs(path);
 
                 // save the image path path to the database or you can send image 
                 // directly to database
@@ -76,12 +76,12 @@ namespace ModellsUp.Controllers
         /// <param name="pictureFile"></param>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult GetExifs(string pictureFile)
+        public pictureExifMetaData GetExifs(string pictureFile)
         {
             pictureExifMetaData pictureExifs = new pictureExifMetaData();
 
             // Retrieve picture file path :
-            var pathPictureFile = Server.MapPath(pictureFile);
+            var pathPictureFile = pictureFile;
 
             // Check if file path exists :
             if (System.IO.File.Exists(pathPictureFile))
@@ -89,8 +89,8 @@ namespace ModellsUp.Controllers
 
                 // Retrieve directories of picture file properties :
                 var pictureDirectories = ImageMetadataReader
-                                        .ReadMetadata(pathPictureFile)
-                                        .ToList();
+                                         .ReadMetadata(pathPictureFile)
+                                         .ToList();
 
                 // 1° Read directories metadata files :
 
@@ -204,11 +204,8 @@ namespace ModellsUp.Controllers
                                              pictureExifs.pictureHeight +
                                              pictureExifMetaData.Pixels;
 
-                pictureExifs.pictureDimensions = (
-                                                    pictureExifs.pictureWidth != pictureExifMetaData.TabEmpty
-                                                    &&
-                                                    pictureExifs.pictureHeight != pictureExifMetaData.TabEmpty
-                                                 ) ?
+                pictureExifs.pictureDimensions = (pictureExifs.pictureWidth != pictureExifMetaData.TabEmpty
+                                                 && pictureExifs.pictureHeight != pictureExifMetaData.TabEmpty) ?
                                                  pictureWeightAndHeight :
                                                  pictureExifMetaData.TabEmpty;
                 // Get picture file size :
@@ -221,10 +218,10 @@ namespace ModellsUp.Controllers
                                                     )
                                                );
 
-                return Json(pictureExifs, JsonRequestBehavior.AllowGet);
+                return pictureExifs;
 
             }
-                return Json(pictureExifs, JsonRequestBehavior.AllowGet);
+                return pictureExifs;
         }
 
         /// <summary>
@@ -360,7 +357,7 @@ namespace ModellsUp.Controllers
 
                 bool isDateValueBeenFormated = DateTime.TryParse(dateValue, out dateValueFormated);
 
-                var finalDateValue = (isDateValueBeenFormated) ?
+                var finalDateValue = isDateValueBeenFormated ?
                                      dateValueFormated.ToString("dd/MM/yyyy") :
                                      dateValue.ToString();
                 
@@ -372,7 +369,7 @@ namespace ModellsUp.Controllers
 
                 bool isTimeValueBeenFormated = DateTime.TryParse(timeValue, out timeValueFormated);
 
-                var finalTimeValue = (isTimeValueBeenFormated) ?
+                var finalTimeValue = isTimeValueBeenFormated ?
                                      timeValueFormated.ToString("hh:mm:ss") :
                                      timeValue.ToString();
 
@@ -385,5 +382,7 @@ namespace ModellsUp.Controllers
         }
 
         #endregion
+
+
     }
 }
